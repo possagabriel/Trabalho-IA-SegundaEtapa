@@ -1,0 +1,1332 @@
+{
+  "schema_version": 1,
+  "metadata": {
+    "title": "Consultor de Carreiras em TI",
+    "version": "1.0.0",
+    "reviewed_at": "2026-10-22",
+    "method": "Modelo educacional heurístico; pesos e metas não foram calibrados com dados de contratação.",
+    "junior_definition": "Referência didática: executar tarefas básicas com orientação. Atingir as metas não comprova senioridade nem garante contratação.",
+    "certification_note": "Certificações são opcionais e exames podem ter custo. Consulte os links oficiais antes de decidir; os materiais indicados permitem iniciar os estudos sem certificação."
+  },
+  "scoring": {
+    "min": 1,
+    "max": 5,
+    "unknown_normalized": 0.5,
+    "tie_tolerance": 3,
+    "min_coverage": 0.5,
+    "low_compatibility": 40
+  },
+  "knowledge_levels": {
+    "0": "Nunca estudei",
+    "1": "Conheço a teoria",
+    "2": "Faço tarefas básicas com orientação",
+    "3": "Realizo projetos com autonomia",
+    "4": "Aprofundo, otimizo e oriento"
+  },
+  "questions": [
+    {
+      "id": "logica",
+      "label": "Raciocínio lógico",
+      "prompt": "Resolver problemas por etapas e escrever algoritmos.",
+      "group": "afinidades"
+    },
+    {
+      "id": "matematica",
+      "label": "Matemática e estatística",
+      "prompt": "Trabalhar com números, probabilidades e modelos.",
+      "group": "afinidades"
+    },
+    {
+      "id": "programacao",
+      "label": "Programação",
+      "prompt": "Construir e depurar código.",
+      "group": "afinidades"
+    },
+    {
+      "id": "visual",
+      "label": "Design visual",
+      "prompt": "Criar interfaces e organizar elementos visuais.",
+      "group": "afinidades"
+    },
+    {
+      "id": "empatia",
+      "label": "Experiência do usuário",
+      "prompt": "Entender necessidades e testar a usabilidade de soluções.",
+      "group": "afinidades"
+    },
+    {
+      "id": "dados",
+      "label": "Análise de dados",
+      "prompt": "Investigar dados para responder perguntas.",
+      "group": "afinidades"
+    },
+    {
+      "id": "infra",
+      "label": "Infraestrutura",
+      "prompt": "Configurar sistemas operacionais e ambientes de execução.",
+      "group": "afinidades"
+    },
+    {
+      "id": "redes",
+      "label": "Redes",
+      "prompt": "Entender como computadores e serviços se comunicam.",
+      "group": "afinidades"
+    },
+    {
+      "id": "seguranca",
+      "label": "Segurança",
+      "prompt": "Investigar riscos e proteger informações.",
+      "group": "afinidades"
+    },
+    {
+      "id": "automacao",
+      "label": "Automação",
+      "prompt": "Eliminar tarefas repetitivas com scripts e ferramentas.",
+      "group": "afinidades"
+    },
+    {
+      "id": "detalhes",
+      "label": "Atenção a detalhes",
+      "prompt": "Reproduzir falhas, revisar e verificar resultados.",
+      "group": "afinidades"
+    },
+    {
+      "id": "comunicacao",
+      "label": "Comunicação",
+      "prompt": "Explicar ideias, ouvir pessoas e negociar prioridades.",
+      "group": "afinidades"
+    },
+    {
+      "id": "negocio",
+      "label": "Produto e negócio",
+      "prompt": "Relacionar soluções a problemas e métricas de negócio.",
+      "group": "afinidades"
+    },
+    {
+      "id": "mobile",
+      "label": "Aplicativos móveis",
+      "prompt": "Criar experiências para celulares e tablets.",
+      "group": "afinidades"
+    },
+    {
+      "id": "incidentes",
+      "label": "Resposta a incidentes",
+      "prompt": "Investigar falhas urgentes e restaurar serviços.",
+      "group": "objetivos"
+    },
+    {
+      "id": "construir",
+      "label": "Construir produtos",
+      "prompt": "Quero atuar implementando produtos e funcionalidades.",
+      "group": "objetivos"
+    },
+    {
+      "id": "investigar",
+      "label": "Investigar e experimentar",
+      "prompt": "Quero formular hipóteses e comparar resultados.",
+      "group": "objetivos"
+    },
+    {
+      "id": "operar",
+      "label": "Operar serviços",
+      "prompt": "Quero manter serviços confiáveis e disponíveis.",
+      "group": "objetivos"
+    },
+    {
+      "id": "liderar",
+      "label": "Coordenar prioridades",
+      "prompt": "Quero facilitar decisões de produto e alinhar pessoas.",
+      "group": "objetivos"
+    },
+    {
+      "id": "arquitetar",
+      "label": "Projetar sistemas",
+      "prompt": "Quero planejar integrações, escalabilidade e decisões técnicas.",
+      "group": "objetivos"
+    }
+  ],
+  "skills": {
+    "git": {
+      "name": "Git e GitHub",
+      "hours_per_level": 8,
+      "prerequisites": [],
+      "study": "Versionar alterações, abrir uma pull request e documentar o repositório.",
+      "url": "https://docs.github.com/pt/get-started"
+    },
+    "programacao": {
+      "name": "Fundamentos de programação",
+      "hours_per_level": 16,
+      "prerequisites": [],
+      "study": "Praticar variáveis, funções, coleções e tratamento de erros em Python.",
+      "url": "https://docs.python.org/pt-br/3/tutorial/"
+    },
+    "sql": {
+      "name": "SQL e modelagem relacional",
+      "hours_per_level": 12,
+      "prerequisites": [],
+      "study": "Modelar tabelas e escrever consultas com JOIN, agregações e restrições.",
+      "url": "https://www.postgresql.org/docs/current/tutorial.html"
+    },
+    "http": {
+      "name": "HTTP e APIs",
+      "hours_per_level": 8,
+      "prerequisites": [],
+      "study": "Estudar métodos, códigos de resposta, autenticação e contratos de API.",
+      "url": "https://developer.mozilla.org/pt-BR/docs/Web/HTTP"
+    },
+    "api": {
+      "name": "APIs com Python / FastAPI",
+      "hours_per_level": 16,
+      "prerequisites": [
+        "programacao",
+        "http"
+      ],
+      "study": "Construir endpoints, validar entradas e persistir dados.",
+      "url": "https://fastapi.tiangolo.com/tutorial/"
+    },
+    "testes": {
+      "name": "Testes de software",
+      "hours_per_level": 10,
+      "prerequisites": [],
+      "study": "Definir casos, limites, critérios de aceitação e registrar defeitos reproduzíveis.",
+      "url": "https://istqb.org/certifications/certified-tester-foundation-level-ctfl-v4-0/"
+    },
+    "html_css": {
+      "name": "HTML e CSS",
+      "hours_per_level": 12,
+      "prerequisites": [],
+      "study": "Construir páginas semânticas, responsivas e navegáveis por teclado.",
+      "url": "https://developer.mozilla.org/pt-BR/docs/Learn_web_development"
+    },
+    "javascript": {
+      "name": "JavaScript",
+      "hours_per_level": 16,
+      "prerequisites": [
+        "html_css"
+      ],
+      "study": "Praticar eventos, manipulação de DOM e chamadas assíncronas.",
+      "url": "https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Guide"
+    },
+    "react": {
+      "name": "React",
+      "hours_per_level": 14,
+      "prerequisites": [
+        "javascript"
+      ],
+      "study": "Criar componentes, gerenciar estado e consumir uma API.",
+      "url": "https://react.dev/learn"
+    },
+    "ux": {
+      "name": "Pesquisa UX e acessibilidade",
+      "hours_per_level": 10,
+      "prerequisites": [],
+      "study": "Entrevistar usuários, prototipar um fluxo e validar acessibilidade.",
+      "url": "https://www.w3.org/WAI/fundamentals/"
+    },
+    "estatistica": {
+      "name": "Estatística",
+      "hours_per_level": 16,
+      "prerequisites": [],
+      "study": "Estudar distribuição, amostragem, correlação e avaliação de hipóteses.",
+      "url": "https://www.itl.nist.gov/div898/handbook/"
+    },
+    "pandas": {
+      "name": "Análise com Pandas",
+      "hours_per_level": 12,
+      "prerequisites": [
+        "programacao"
+      ],
+      "study": "Limpar dados, tratar valores ausentes e produzir uma análise reproduzível.",
+      "url": "https://pandas.pydata.org/docs/getting_started/"
+    },
+    "ml": {
+      "name": "Aprendizado de máquina",
+      "hours_per_level": 20,
+      "prerequisites": [
+        "pandas",
+        "estatistica"
+      ],
+      "study": "Criar baseline, separar treino e teste e avaliar métricas sem vazamento de dados.",
+      "url": "https://scikit-learn.org/stable/getting_started.html"
+    },
+    "visualizacao": {
+      "name": "Visualização de dados",
+      "hours_per_level": 10,
+      "prerequisites": [
+        "pandas"
+      ],
+      "study": "Escolher gráficos adequados e explicar resultados e limitações.",
+      "url": "https://matplotlib.org/stable/users/explain/quick_start.html"
+    },
+    "etl": {
+      "name": "Pipelines ETL/ELT",
+      "hours_per_level": 16,
+      "prerequisites": [
+        "programacao",
+        "sql"
+      ],
+      "study": "Construir ingestão idempotente com validações de qualidade de dados.",
+      "url": "https://airflow.apache.org/docs/"
+    },
+    "spark": {
+      "name": "Processamento com Spark",
+      "hours_per_level": 18,
+      "prerequisites": [
+        "etl"
+      ],
+      "study": "Processar tabelas particionadas e explicar escolhas de processamento.",
+      "url": "https://spark.apache.org/docs/latest/"
+    },
+    "linux": {
+      "name": "Linux e shell",
+      "hours_per_level": 12,
+      "prerequisites": [],
+      "study": "Praticar permissões, processos, serviços, logs e scripts de shell.",
+      "url": "https://ubuntu.com/tutorials/command-line-for-beginners"
+    },
+    "redes": {
+      "name": "Fundamentos de redes",
+      "hours_per_level": 12,
+      "prerequisites": [],
+      "study": "Estudar DNS, TCP/IP, TLS, sub-redes e diagnóstico de conectividade.",
+      "url": "https://developer.mozilla.org/en-US/docs/Learn_web_development/Howto/Web_mechanics/How_does_the_Internet_work"
+    },
+    "seguranca": {
+      "name": "Fundamentos de segurança",
+      "hours_per_level": 12,
+      "prerequisites": [],
+      "study": "Estudar controle de acesso, riscos, criptografia e privilégio mínimo.",
+      "url": "https://www.isc2.org/certifications/cc"
+    },
+    "owasp": {
+      "name": "Segurança de aplicações / OWASP",
+      "hours_per_level": 14,
+      "prerequisites": [
+        "http",
+        "seguranca"
+      ],
+      "study": "Identificar e corrigir vulnerabilidades em laboratório local autorizado.",
+      "url": "https://owasp.org/www-project-web-security-testing-guide/"
+    },
+    "incidentes": {
+      "name": "Análise de logs e incidentes",
+      "hours_per_level": 14,
+      "prerequisites": [
+        "linux",
+        "redes",
+        "seguranca"
+      ],
+      "study": "Montar um laboratório isolado e documentar detecção, resposta e evidências.",
+      "url": "https://www.nist.gov/itl/smallbusinesscyber/responding-cyber-incident"
+    },
+    "docker": {
+      "name": "Containers / Docker",
+      "hours_per_level": 12,
+      "prerequisites": [
+        "linux"
+      ],
+      "study": "Empacotar uma aplicação e configurar rede, volumes e health checks.",
+      "url": "https://docs.docker.com/get-started/"
+    },
+    "ci": {
+      "name": "Integração e entrega contínuas",
+      "hours_per_level": 12,
+      "prerequisites": [
+        "git",
+        "docker"
+      ],
+      "study": "Automatizar testes, construção e publicação de artefatos com GitHub Actions.",
+      "url": "https://docs.github.com/pt/actions"
+    },
+    "observabilidade": {
+      "name": "Observabilidade",
+      "hours_per_level": 12,
+      "prerequisites": [
+        "linux"
+      ],
+      "study": "Definir indicadores, coletar métricas e criar alertas acionáveis.",
+      "url": "https://prometheus.io/docs/introduction/overview/"
+    },
+    "cloud": {
+      "name": "Fundamentos de nuvem",
+      "hours_per_level": 14,
+      "prerequisites": [
+        "redes"
+      ],
+      "study": "Estudar computação, armazenamento, IAM, custos e responsabilidade compartilhada.",
+      "url": "https://aws.amazon.com/training/digital/"
+    },
+    "iac": {
+      "name": "Infraestrutura como código",
+      "hours_per_level": 16,
+      "prerequisites": [
+        "cloud"
+      ],
+      "study": "Descrever uma infraestrutura, revisar o plano e organizar variáveis e estado.",
+      "url": "https://developer.hashicorp.com/terraform/tutorials"
+    },
+    "arquitetura": {
+      "name": "Arquitetura de soluções",
+      "hours_per_level": 18,
+      "prerequisites": [
+        "cloud",
+        "seguranca"
+      ],
+      "study": "Diagramar uma solução e justificar disponibilidade, custo e recuperação.",
+      "url": "https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html"
+    },
+    "flutter": {
+      "name": "Dart e Flutter",
+      "hours_per_level": 18,
+      "prerequisites": [
+        "programacao"
+      ],
+      "study": "Construir telas, navegação, estado e integração HTTP.",
+      "url": "https://docs.flutter.dev/learn"
+    },
+    "mobile_storage": {
+      "name": "Persistência e ciclo de vida mobile",
+      "hours_per_level": 12,
+      "prerequisites": [
+        "flutter"
+      ],
+      "study": "Persistir dados offline e tratar erros, reconexão e ciclo de vida.",
+      "url": "https://docs.flutter.dev/cookbook/persistence"
+    },
+    "automacao_testes": {
+      "name": "Automação de testes",
+      "hours_per_level": 16,
+      "prerequisites": [
+        "programacao",
+        "testes"
+      ],
+      "study": "Automatizar cenários positivos, negativos e limites com pytest ou Playwright.",
+      "url": "https://playwright.dev/python/docs/intro"
+    },
+    "produto": {
+      "name": "Discovery e métricas de produto",
+      "hours_per_level": 12,
+      "prerequisites": [],
+      "study": "Definir problema, hipóteses, indicadores e experimentos para validar valor.",
+      "url": "https://www.scrum.org/resources/evidence-based-management-guide"
+    },
+    "agil": {
+      "name": "Scrum e priorização",
+      "hours_per_level": 10,
+      "prerequisites": [],
+      "study": "Organizar backlog, definir objetivo de produto e priorizar por valor.",
+      "url": "https://scrumguides.org/"
+    },
+    "comunicacao": {
+      "name": "Comunicação e stakeholders",
+      "hours_per_level": 8,
+      "prerequisites": [],
+      "study": "Produzir uma especificação curta, registrar decisões e apresentar trade-offs.",
+      "url": "https://www.scrum.org/resources/what-is-a-product-owner"
+    }
+  },
+  "tracks": [
+    {
+      "id": "backend",
+      "name": "Back-end",
+      "description": "APIs, regras de negócio e persistência de dados.",
+      "weights": {
+        "logica": 5,
+        "programacao": 5,
+        "dados": 2,
+        "automacao": 2,
+        "detalhes": 3,
+        "seguranca": 2,
+        "construir": 4,
+        "arquitetar": 3
+      },
+      "penalties": [
+        {
+          "id": "backend_programacao_baixo",
+          "conditions": [
+            {
+              "question": "programacao",
+              "operator": "lte",
+              "value": 2
+            }
+          ],
+          "points": 12,
+          "reason": "Baixa afinidade com programação, relevante para esta trilha."
+        },
+        {
+          "id": "backend_logica_baixo",
+          "conditions": [
+            {
+              "question": "logica",
+              "operator": "lte",
+              "value": 2
+            }
+          ],
+          "points": 12,
+          "reason": "Baixa afinidade com raciocínio lógico, relevante para esta trilha."
+        }
+      ],
+      "requirements": [
+        {
+          "skill": "git",
+          "target": 2,
+          "importance": 2
+        },
+        {
+          "skill": "programacao",
+          "target": 2,
+          "importance": 3
+        },
+        {
+          "skill": "sql",
+          "target": 2,
+          "importance": 2
+        },
+        {
+          "skill": "http",
+          "target": 2,
+          "importance": 2
+        },
+        {
+          "skill": "api",
+          "target": 2,
+          "importance": 2
+        },
+        {
+          "skill": "testes",
+          "target": 2,
+          "importance": 2
+        }
+      ],
+      "certifications": [
+        {
+          "name": "GitHub Foundations",
+          "url": "https://learn.github.com/certifications",
+          "when": "Opcional, após praticar Git e colaboração em repositórios. É transversal; não certifica domínio da especialidade."
+        }
+      ],
+      "portfolio": {
+        "title": "API de gestão de estudos",
+        "summary": "Criar uma API com autenticação, cadastro de metas e acompanhamento de progresso.",
+        "deliverables": [
+          "Contrato OpenAPI e esquema do banco",
+          "Validação, autorização e testes de casos limite",
+          "README com execução local e exemplos de requisição"
+        ]
+      }
+    },
+    {
+      "id": "frontend",
+      "name": "Front-end/UX",
+      "description": "Interfaces acessíveis e experiências centradas no usuário.",
+      "weights": {
+        "visual": 5,
+        "empatia": 5,
+        "programacao": 3,
+        "comunicacao": 2,
+        "detalhes": 3,
+        "construir": 4,
+        "negocio": 1
+      },
+      "penalties": [
+        {
+          "id": "frontend_visual_baixo",
+          "conditions": [
+            {
+              "question": "visual",
+              "operator": "lte",
+              "value": 2
+            }
+          ],
+          "points": 12,
+          "reason": "Baixa afinidade com design visual, relevante para esta trilha."
+        },
+        {
+          "id": "frontend_empatia_baixo",
+          "conditions": [
+            {
+              "question": "empatia",
+              "operator": "lte",
+              "value": 2
+            }
+          ],
+          "points": 12,
+          "reason": "Baixa afinidade com experiência do usuário, relevante para esta trilha."
+        }
+      ],
+      "requirements": [
+        {
+          "skill": "git",
+          "target": 2,
+          "importance": 2
+        },
+        {
+          "skill": "html_css",
+          "target": 2,
+          "importance": 2
+        },
+        {
+          "skill": "javascript",
+          "target": 2,
+          "importance": 2
+        },
+        {
+          "skill": "react",
+          "target": 2,
+          "importance": 2
+        },
+        {
+          "skill": "ux",
+          "target": 2,
+          "importance": 2
+        },
+        {
+          "skill": "testes",
+          "target": 2,
+          "importance": 2
+        }
+      ],
+      "certifications": [
+        {
+          "name": "GitHub Foundations",
+          "url": "https://learn.github.com/certifications",
+          "when": "Opcional, após praticar Git e colaboração em repositórios. É transversal; não certifica domínio da especialidade."
+        }
+      ],
+      "portfolio": {
+        "title": "Painel acessível de estudos",
+        "summary": "Criar um painel responsivo a partir de entrevistas e protótipos.",
+        "deliverables": [
+          "Protótipo e justificativas de UX",
+          "Interface com estados de carregamento, vazio e erro",
+          "Verificação de teclado, contraste e responsividade"
+        ]
+      }
+    },
+    {
+      "id": "cientista_dados",
+      "name": "Cientista de Dados",
+      "description": "Experimentos, estatística e modelos para apoiar decisões.",
+      "weights": {
+        "matematica": 5,
+        "dados": 5,
+        "logica": 4,
+        "programacao": 3,
+        "detalhes": 3,
+        "investigar": 5,
+        "negocio": 2,
+        "comunicacao": 2
+      },
+      "penalties": [
+        {
+          "id": "cientista_dados_matematica_baixo",
+          "conditions": [
+            {
+              "question": "matematica",
+              "operator": "lte",
+              "value": 2
+            }
+          ],
+          "points": 12,
+          "reason": "Baixa afinidade com matemática e estatística, relevante para esta trilha."
+        },
+        {
+          "id": "cientista_dados_dados_baixo",
+          "conditions": [
+            {
+              "question": "dados",
+              "operator": "lte",
+              "value": 2
+            }
+          ],
+          "points": 12,
+          "reason": "Baixa afinidade com análise de dados, relevante para esta trilha."
+        }
+      ],
+      "requirements": [
+        {
+          "skill": "git",
+          "target": 2,
+          "importance": 2
+        },
+        {
+          "skill": "programacao",
+          "target": 2,
+          "importance": 2
+        },
+        {
+          "skill": "sql",
+          "target": 2,
+          "importance": 2
+        },
+        {
+          "skill": "estatistica",
+          "target": 2,
+          "importance": 2
+        },
+        {
+          "skill": "pandas",
+          "target": 2,
+          "importance": 2
+        },
+        {
+          "skill": "ml",
+          "target": 2,
+          "importance": 2
+        },
+        {
+          "skill": "visualizacao",
+          "target": 2,
+          "importance": 2
+        }
+      ],
+      "certifications": [
+        {
+          "name": "AWS Certified AI Practitioner",
+          "url": "https://aws.amazon.com/certification/certified-ai-practitioner/",
+          "when": "Opcional, para fundamentos de IA em nuvem após os estudos iniciais; não substitui estatística nem prática de ciência de dados."
+        }
+      ],
+      "portfolio": {
+        "title": "Estudo preditivo reproduzível",
+        "summary": "Analisar um conjunto de dados público e comparar um modelo com uma baseline.",
+        "deliverables": [
+          "Dicionário de dados e análise exploratória",
+          "Separação treino/teste, baseline e métricas justificadas",
+          "Relatório de limitações, vieses e reprodução"
+        ]
+      }
+    },
+    {
+      "id": "engenheiro_dados",
+      "name": "Engenheiro de Dados",
+      "description": "Ingestão, transformação e qualidade de dados.",
+      "weights": {
+        "dados": 5,
+        "programacao": 4,
+        "logica": 4,
+        "infra": 3,
+        "automacao": 5,
+        "detalhes": 3,
+        "arquitetar": 3,
+        "operar": 2
+      },
+      "penalties": [
+        {
+          "id": "engenheiro_dados_dados_baixo",
+          "conditions": [
+            {
+              "question": "dados",
+              "operator": "lte",
+              "value": 2
+            }
+          ],
+          "points": 12,
+          "reason": "Baixa afinidade com análise de dados, relevante para esta trilha."
+        },
+        {
+          "id": "engenheiro_dados_automacao_baixo",
+          "conditions": [
+            {
+              "question": "automacao",
+              "operator": "lte",
+              "value": 2
+            }
+          ],
+          "points": 12,
+          "reason": "Baixa afinidade com automação, relevante para esta trilha."
+        }
+      ],
+      "requirements": [
+        {
+          "skill": "git",
+          "target": 2,
+          "importance": 2
+        },
+        {
+          "skill": "programacao",
+          "target": 2,
+          "importance": 2
+        },
+        {
+          "skill": "sql",
+          "target": 2,
+          "importance": 2
+        },
+        {
+          "skill": "etl",
+          "target": 2,
+          "importance": 2
+        },
+        {
+          "skill": "spark",
+          "target": 2,
+          "importance": 2
+        },
+        {
+          "skill": "redes",
+          "target": 2,
+          "importance": 2
+        },
+        {
+          "skill": "cloud",
+          "target": 2,
+          "importance": 2
+        }
+      ],
+      "certifications": [
+        {
+          "name": "AWS Certified Data Engineer – Associate",
+          "url": "https://aws.amazon.com/certification/certified-data-engineer-associate/",
+          "when": "Objetivo posterior à prática de pipelines e serviços de dados na AWS; não é condição para começar."
+        }
+      ],
+      "portfolio": {
+        "title": "Pipeline de dados públicos",
+        "summary": "Ingerir dados públicos, transformar e disponibilizar tabelas analíticas.",
+        "deliverables": [
+          "Ingestão idempotente e dados brutos preservados",
+          "Testes de qualidade, particionamento e orquestração",
+          "Documentação de linhagem e recuperação de falhas"
+        ]
+      }
+    },
+    {
+      "id": "ciberseguranca",
+      "name": "Cibersegurança",
+      "description": "Prevenção, investigação e resposta a riscos digitais.",
+      "weights": {
+        "seguranca": 5,
+        "redes": 4,
+        "infra": 3,
+        "detalhes": 5,
+        "logica": 3,
+        "investigar": 4,
+        "incidentes": 4,
+        "operar": 2
+      },
+      "penalties": [
+        {
+          "id": "ciberseguranca_seguranca_baixo",
+          "conditions": [
+            {
+              "question": "seguranca",
+              "operator": "lte",
+              "value": 2
+            }
+          ],
+          "points": 12,
+          "reason": "Baixa afinidade com segurança, relevante para esta trilha."
+        },
+        {
+          "id": "ciberseguranca_detalhes_baixo",
+          "conditions": [
+            {
+              "question": "detalhes",
+              "operator": "lte",
+              "value": 2
+            }
+          ],
+          "points": 12,
+          "reason": "Baixa afinidade com atenção a detalhes, relevante para esta trilha."
+        }
+      ],
+      "requirements": [
+        {
+          "skill": "git",
+          "target": 2,
+          "importance": 2
+        },
+        {
+          "skill": "linux",
+          "target": 2,
+          "importance": 2
+        },
+        {
+          "skill": "redes",
+          "target": 2,
+          "importance": 2
+        },
+        {
+          "skill": "http",
+          "target": 2,
+          "importance": 2
+        },
+        {
+          "skill": "seguranca",
+          "target": 2,
+          "importance": 3
+        },
+        {
+          "skill": "owasp",
+          "target": 2,
+          "importance": 2
+        },
+        {
+          "skill": "incidentes",
+          "target": 2,
+          "importance": 2
+        }
+      ],
+      "certifications": [
+        {
+          "name": "ISC2 Certified in Cybersecurity (CC)",
+          "url": "https://www.isc2.org/certifications/cc",
+          "when": "Opcional, após estudar os fundamentos de segurança."
+        }
+      ],
+      "portfolio": {
+        "title": "Laboratório defensivo local",
+        "summary": "Configurar um ambiente isolado, corrigir falhas e documentar uma resposta a incidente simulado.",
+        "deliverables": [
+          "Escopo autorizado e modelo de ameaças",
+          "Logs, controles de acesso e correções verificáveis",
+          "Relatório com evidências e recomendações"
+        ]
+      }
+    },
+    {
+      "id": "devops",
+      "name": "DevOps/SRE",
+      "description": "Automação de entregas e confiabilidade de serviços.",
+      "weights": {
+        "infra": 5,
+        "automacao": 5,
+        "redes": 3,
+        "programacao": 2,
+        "detalhes": 3,
+        "incidentes": 4,
+        "operar": 5,
+        "arquitetar": 2
+      },
+      "penalties": [
+        {
+          "id": "devops_automacao_baixo",
+          "conditions": [
+            {
+              "question": "automacao",
+              "operator": "lte",
+              "value": 2
+            }
+          ],
+          "points": 12,
+          "reason": "Baixa afinidade com automação, relevante para esta trilha."
+        },
+        {
+          "id": "devops_incidentes_baixo",
+          "conditions": [
+            {
+              "question": "incidentes",
+              "operator": "lte",
+              "value": 2
+            }
+          ],
+          "points": 12,
+          "reason": "Baixa afinidade com resposta a incidentes, relevante para esta trilha."
+        }
+      ],
+      "requirements": [
+        {
+          "skill": "git",
+          "target": 2,
+          "importance": 2
+        },
+        {
+          "skill": "linux",
+          "target": 2,
+          "importance": 2
+        },
+        {
+          "skill": "redes",
+          "target": 2,
+          "importance": 2
+        },
+        {
+          "skill": "docker",
+          "target": 2,
+          "importance": 2
+        },
+        {
+          "skill": "ci",
+          "target": 2,
+          "importance": 2
+        },
+        {
+          "skill": "observabilidade",
+          "target": 2,
+          "importance": 2
+        }
+      ],
+      "certifications": [
+        {
+          "name": "Certified Kubernetes Administrator (CKA)",
+          "url": "https://training.linuxfoundation.org/certification/certified-kubernetes-administrator-cka/",
+          "when": "Meta posterior: primeiro Linux, containers e operação; depois estudar e praticar Kubernetes, que excede este roteiro inicial."
+        }
+      ],
+      "portfolio": {
+        "title": "Entrega contínua de um serviço",
+        "summary": "Containerizar uma aplicação e automatizar a entrega com monitoramento.",
+        "deliverables": [
+          "Pipeline com testes e construção da imagem",
+          "Métricas, objetivo de serviço e alerta",
+          "Runbook com rollback e simulação de falha"
+        ]
+      }
+    },
+    {
+      "id": "cloud",
+      "name": "Cloud Architecture",
+      "description": "Desenho de soluções em nuvem com segurança e controle de custos.",
+      "weights": {
+        "infra": 5,
+        "redes": 4,
+        "seguranca": 3,
+        "logica": 3,
+        "comunicacao": 3,
+        "negocio": 2,
+        "arquitetar": 5,
+        "operar": 3
+      },
+      "penalties": [
+        {
+          "id": "cloud_infra_baixo",
+          "conditions": [
+            {
+              "question": "infra",
+              "operator": "lte",
+              "value": 2
+            }
+          ],
+          "points": 12,
+          "reason": "Baixa afinidade com infraestrutura, relevante para esta trilha."
+        },
+        {
+          "id": "cloud_arquitetar_baixo",
+          "conditions": [
+            {
+              "question": "arquitetar",
+              "operator": "lte",
+              "value": 2
+            }
+          ],
+          "points": 12,
+          "reason": "Baixa afinidade com projetar sistemas, relevante para esta trilha."
+        }
+      ],
+      "requirements": [
+        {
+          "skill": "git",
+          "target": 2,
+          "importance": 2
+        },
+        {
+          "skill": "linux",
+          "target": 2,
+          "importance": 2
+        },
+        {
+          "skill": "redes",
+          "target": 2,
+          "importance": 2
+        },
+        {
+          "skill": "seguranca",
+          "target": 2,
+          "importance": 2
+        },
+        {
+          "skill": "cloud",
+          "target": 2,
+          "importance": 2
+        },
+        {
+          "skill": "iac",
+          "target": 2,
+          "importance": 2
+        },
+        {
+          "skill": "arquitetura",
+          "target": 2,
+          "importance": 2
+        }
+      ],
+      "certifications": [
+        {
+          "name": "AWS Certified Solutions Architect – Associate",
+          "url": "https://aws.amazon.com/certification/certified-solutions-architect-associate/",
+          "when": "Opcional, após laboratórios de arquitetura na AWS. Cloud Practitioner pode ser uma etapa introdutória; arquitetura costuma exigir experiência além do nível inicial."
+        }
+      ],
+      "portfolio": {
+        "title": "Arquitetura documentada de uma aplicação",
+        "summary": "Projetar uma solução em nuvem e descrever sua infraestrutura como código.",
+        "deliverables": [
+          "Diagrama, decisões e estimativa de custos",
+          "IAM com privilégio mínimo e plano de recuperação",
+          "Validação local do código e instruções para remover recursos"
+        ]
+      }
+    },
+    {
+      "id": "mobile",
+      "name": "Mobile",
+      "description": "Aplicativos móveis com interfaces e persistência local.",
+      "weights": {
+        "mobile": 5,
+        "programacao": 4,
+        "visual": 3,
+        "empatia": 4,
+        "logica": 3,
+        "detalhes": 2,
+        "construir": 5
+      },
+      "penalties": [
+        {
+          "id": "mobile_mobile_baixo",
+          "conditions": [
+            {
+              "question": "mobile",
+              "operator": "lte",
+              "value": 2
+            }
+          ],
+          "points": 12,
+          "reason": "Baixa afinidade com aplicativos móveis, relevante para esta trilha."
+        },
+        {
+          "id": "mobile_programacao_baixo",
+          "conditions": [
+            {
+              "question": "programacao",
+              "operator": "lte",
+              "value": 2
+            }
+          ],
+          "points": 12,
+          "reason": "Baixa afinidade com programação, relevante para esta trilha."
+        }
+      ],
+      "requirements": [
+        {
+          "skill": "git",
+          "target": 2,
+          "importance": 2
+        },
+        {
+          "skill": "programacao",
+          "target": 2,
+          "importance": 3
+        },
+        {
+          "skill": "http",
+          "target": 2,
+          "importance": 2
+        },
+        {
+          "skill": "flutter",
+          "target": 2,
+          "importance": 2
+        },
+        {
+          "skill": "mobile_storage",
+          "target": 2,
+          "importance": 2
+        },
+        {
+          "skill": "ux",
+          "target": 2,
+          "importance": 2
+        },
+        {
+          "skill": "testes",
+          "target": 2,
+          "importance": 2
+        }
+      ],
+      "certifications": [
+        {
+          "name": "GitHub Foundations",
+          "url": "https://learn.github.com/certifications",
+          "when": "Opcional, após praticar Git e colaboração em repositórios. É transversal; não certifica domínio da especialidade."
+        }
+      ],
+      "portfolio": {
+        "title": "Aplicativo offline de hábitos",
+        "summary": "Criar um aplicativo Flutter para registrar hábitos e acompanhar evolução.",
+        "deliverables": [
+          "Navegação, estados e armazenamento local",
+          "Tratamento de erros e reconexão",
+          "Testes, capturas de tela e instruções de instalação"
+        ]
+      }
+    },
+    {
+      "id": "qa",
+      "name": "QA",
+      "description": "Estratégias de teste e prevenção de defeitos.",
+      "weights": {
+        "detalhes": 5,
+        "logica": 4,
+        "automacao": 4,
+        "empatia": 2,
+        "comunicacao": 3,
+        "programacao": 2,
+        "investigar": 4
+      },
+      "penalties": [
+        {
+          "id": "qa_detalhes_baixo",
+          "conditions": [
+            {
+              "question": "detalhes",
+              "operator": "lte",
+              "value": 2
+            }
+          ],
+          "points": 12,
+          "reason": "Baixa afinidade com atenção a detalhes, relevante para esta trilha."
+        },
+        {
+          "id": "qa_investigar_baixo",
+          "conditions": [
+            {
+              "question": "investigar",
+              "operator": "lte",
+              "value": 2
+            }
+          ],
+          "points": 12,
+          "reason": "Baixa afinidade com investigar e experimentar, relevante para esta trilha."
+        }
+      ],
+      "requirements": [
+        {
+          "skill": "git",
+          "target": 2,
+          "importance": 2
+        },
+        {
+          "skill": "programacao",
+          "target": 2,
+          "importance": 2
+        },
+        {
+          "skill": "http",
+          "target": 2,
+          "importance": 2
+        },
+        {
+          "skill": "testes",
+          "target": 2,
+          "importance": 2
+        },
+        {
+          "skill": "automacao_testes",
+          "target": 2,
+          "importance": 2
+        }
+      ],
+      "certifications": [
+        {
+          "name": "ISTQB Certified Tester Foundation Level (CTFL)",
+          "url": "https://istqb.org/certifications/certified-tester-foundation-level-ctfl-v4-0/",
+          "when": "Opcional, após estudar fundamentos e praticar desenho de casos de teste."
+        }
+      ],
+      "portfolio": {
+        "title": "Estratégia de qualidade de uma aplicação",
+        "summary": "Criar e automatizar uma suíte de testes para uma aplicação demonstrativa.",
+        "deliverables": [
+          "Plano de testes baseado em risco",
+          "Casos de limite, negativos e relatório de defeitos",
+          "Suíte reproduzível com relatório de execução"
+        ]
+      }
+    },
+    {
+      "id": "produto",
+      "name": "Product Management",
+      "description": "Descoberta de problemas, priorização e valor entregue.",
+      "weights": {
+        "negocio": 5,
+        "comunicacao": 5,
+        "empatia": 4,
+        "dados": 2,
+        "visual": 1,
+        "liderar": 5,
+        "investigar": 3,
+        "construir": 1
+      },
+      "penalties": [
+        {
+          "id": "produto_negocio_baixo",
+          "conditions": [
+            {
+              "question": "negocio",
+              "operator": "lte",
+              "value": 2
+            }
+          ],
+          "points": 12,
+          "reason": "Baixa afinidade com produto e negócio, relevante para esta trilha."
+        },
+        {
+          "id": "produto_comunicacao_baixo",
+          "conditions": [
+            {
+              "question": "comunicacao",
+              "operator": "lte",
+              "value": 2
+            }
+          ],
+          "points": 12,
+          "reason": "Baixa afinidade com comunicação, relevante para esta trilha."
+        }
+      ],
+      "requirements": [
+        {
+          "skill": "produto",
+          "target": 2,
+          "importance": 2
+        },
+        {
+          "skill": "agil",
+          "target": 2,
+          "importance": 2
+        },
+        {
+          "skill": "comunicacao",
+          "target": 2,
+          "importance": 3
+        },
+        {
+          "skill": "ux",
+          "target": 2,
+          "importance": 2
+        },
+        {
+          "skill": "sql",
+          "target": 2,
+          "importance": 2
+        }
+      ],
+      "certifications": [
+        {
+          "name": "Professional Scrum Product Owner I (PSPO I)",
+          "url": "https://www.scrum.org/assessments/professional-scrum-product-owner-i-certification",
+          "when": "Opcional, após estudar Scrum e valor de produto. Trata de Product Ownership, uma parte da atuação em produto."
+        }
+      ],
+      "portfolio": {
+        "title": "Discovery de um produto para estudantes",
+        "summary": "Investigar um problema real e propor um MVP com critérios de sucesso.",
+        "deliverables": [
+          "Entrevistas anonimizadas e hipóteses",
+          "Backlog priorizado e protótipo validado",
+          "Métricas, plano de experimento e apresentação das decisões"
+        ]
+      }
+    }
+  ]
+}
