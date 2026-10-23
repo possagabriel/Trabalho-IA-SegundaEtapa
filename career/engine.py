@@ -12,7 +12,7 @@ DEFAULT_KB = Path(__file__).resolve().parent.parent / "regras_carreiras.json"
 
 def _number(value: Any, low: float, high: float, label: str) -> None:
     if (isinstance(value, bool) or not isinstance(value, (int, float))
-            or not math.isfinite(value) or not low <= value <= high):
+            or not low <= value <= high or not math.isfinite(value)):
         raise ValueError(f"{label}: esperado número entre {low} e {high}.")
 
 
@@ -52,6 +52,9 @@ def validate_knowledge(kb: dict) -> None:
             for field in ("name", "study", "url"):
                 if not spec[field]:
                     raise ValueError(f"Competência {skill} sem {field}.")
+            for field in ("category", "evidence"):
+                if field in spec and (not isinstance(spec[field], str) or not spec[field].strip()):
+                    raise ValueError(f"Competência {skill} com {field} inválido.")
             for prerequisite in spec["prerequisites"]:
                 visit(prerequisite)
             active.remove(skill)
@@ -150,6 +153,7 @@ def rank_careers(kb: dict, answers: dict[str, int | None]) -> dict:
                             "points": 100 * normalized * weight / total_weight})
         base = sum(f["points"] for f in factors)
         penalties = []
+        possible_penalty = 0
         for rule in track["penalties"]:
             def matches(condition: dict) -> bool:
                 value = answers.get(condition["question"])
@@ -159,14 +163,22 @@ def rank_careers(kb: dict, answers: dict[str, int | None]) -> dict:
                         else value >= condition["value"])
             if all(matches(c) for c in rule["conditions"]):
                 penalties.append({"id": rule["id"], "points": rule["points"], "reason": rule["reason"]})
+            # Limite conservador: uma regra ainda pode ativar se nenhuma
+            # resposta conhecida contradiz suas condições.
+            if all(answers.get(c["question"]) is None or matches(c) for c in rule["conditions"]):
+                possible_penalty += rule["points"]
         deduction = sum(p["points"] for p in penalties)
         coverage = sum(f["weight"] for f in factors if f["answer"] is not None) / total_weight
+        known_points = sum(f["points"] for f in factors if f["answer"] is not None)
+        unknown_points = 100 * sum(f["weight"] for f in factors if f["answer"] is None) / total_weight
         ranking.append({"id": track["id"], "name": track["name"],
                         "score": max(0.0, min(100.0, base - deduction)),
                         "base_score": base, "penalty_points": deduction,
-                        "coverage": coverage, "factors": factors, "penalties": penalties})
+                        "coverage": coverage, "factors": factors, "penalties": penalties,
+                        "score_min": min(100.0, max(0.0, known_points - possible_penalty)),
+                        "score_max": min(100.0, max(0.0, known_points + unknown_points - deduction))})
     # Desempate estável; a interface avisa quando a diferença é pequena.
-    ranking.sort(key=lambda result: (-result["score"], result["id"]))
+    ranking.sort(key=lambda result: (-round(result["score"], 10), result["id"]))
     best = ranking[0]
     close = [r["id"] for r in ranking if best["score"] - r["score"] <= cfg["tie_tolerance"]]
     coverage = sum(answers.get(key) is not None for key in questions) / len(questions)
@@ -191,6 +203,8 @@ def build_plan(kb: dict, track_id: str, knowledge: dict[str, int], hours_per_wee
     if track is None:
         raise ValueError("Trilha inexistente.")
     rows, gaps = [], {}
+    inconsistencies = []
+    targets = {req["skill"]: req["target"] for req in track["requirements"]}
     reached = total = 0
     for req in track["requirements"]:
         skill = req["skill"]
@@ -200,11 +214,18 @@ def build_plan(kb: dict, track_id: str, knowledge: dict[str, int], hours_per_wee
         row = {"skill": skill, "name": spec["name"], "current": current,
                "target": req["target"], "gap": gap, "importance": req["importance"]}
         rows.append(row)
+        if current >= req["target"]:
+            for prerequisite in spec["prerequisites"]:
+                if knowledge.get(prerequisite, 0) < targets[prerequisite]:
+                    inconsistencies.append({"skill": spec["name"],
+                                            "prerequisite": kb["skills"][prerequisite]["name"]})
         total += req["target"] * req["importance"]
         reached += min(current, req["target"]) * req["importance"]
         if gap:
             gaps[skill] = {**row, "hours": gap * spec["hours_per_level"],
                            "study": spec["study"], "url": spec["url"],
+                           "evidence": spec.get("evidence", spec["study"]),
+                           "prerequisites": [kb["skills"][p]["name"] for p in spec["prerequisites"]],
                            "priority": gap * req["importance"]}
     remaining = dict(gaps)
     roadmap = []
@@ -231,6 +252,7 @@ def build_plan(kb: dict, track_id: str, knowledge: dict[str, int], hours_per_wee
             "roadmap": roadmap, "total_hours": elapsed,
             "estimated_weeks": math.ceil(elapsed / hours_per_week),
             "hours_per_week": hours_per_week, "portfolio": portfolio,
+            "inconsistencies": inconsistencies,
             "certifications": track["certifications"]}
 
 
@@ -260,6 +282,13 @@ def report_markdown(kb: dict, profile: dict, result: dict, plan: dict) -> str:
         lines.append(f"- {f['label']}: resposta {answer}, peso {f['weight']}, contribuição {f['points']:.2f} pontos.")
     for penalty in selected["penalties"]:
         lines.append(f"- Penalidade: −{penalty['points']} pontos. {penalty['reason']}")
+    if selected["coverage"] < 1:
+        lines += ["", f"Faixa conservadora com respostas pendentes: {selected['score_min']:.1f}% a {selected['score_max']:.1f}%.",
+                  "Essa faixa representa possíveis variações das respostas desconhecidas, não um intervalo de confiança estatístico."]
+    if plan["inconsistencies"]:
+        lines += ["", "### Pontos da autoavaliação para revisar", ""]
+        for item in plan["inconsistencies"]:
+            lines.append(f"- Você declarou domínio inicial de {item['skill']}, mas ainda falta a base em {item['prerequisite']}.")
     lines += ["", "### Competências", "", "| Competência | Atual | Meta | Lacuna |",
               "|---|---:|---:|---:|"]
     for req in plan["requirements"]:
@@ -269,7 +298,8 @@ def report_markdown(kb: dict, profile: dict, result: dict, plan: dict) -> str:
               "O prazo considera apenas as lacunas de estudo; projeto e preparação para exames têm duração adicional.", ""]
     for step in plan["roadmap"]:
         lines += [f"{step['order']}. **{step['name']}** — semanas {step['start_week']}–{step['end_week']}, {step['hours']} h.",
-                  f"   {step['study']} [Material oficial]({step['url']})."]
+                  f"   {step['study']} [Material oficial]({step['url']}).",
+                  f"   **Evidência de aprendizagem:** {step['evidence']}"]
     if not plan["roadmap"]:
         lines.append("Sem lacunas para as metas iniciais desta base. Avance para o projeto de portfólio.")
     project = plan["portfolio"]

@@ -184,3 +184,40 @@ def test_report_includes_caveats_explanations_and_chosen_track(kb):
     for expected in ("Teste", "Mobile", "Informação insuficiente", "Resultados próximos", "Não sei (neutro)",
                      "Lacuna", "Roteiro", "Flutter", "Certificações opcionais", "GitHub Foundations"):
         assert expected in report
+
+
+def test_score_intervals_contain_all_completions(kb):
+    from itertools import product
+    values = answers(kb, 3)
+    values.update(logica=None, programacao=None)
+    bounds = {r["id"]: r for r in rank_careers(kb, values)["ranking"]}
+    for logic, programming in product(range(1, 6), repeat=2):
+        completed = {**values, "logica": logic, "programacao": programming}
+        for row in rank_careers(kb, completed)["ranking"]:
+            bound = bounds[row["id"]]
+            assert bound["score_min"] - 1e-9 <= row["score"] <= bound["score_max"] + 1e-9
+            assert row["score_min"] == pytest.approx(row["score_max"])
+
+
+def test_gte_penalty_interval_is_conservative(kb):
+    kb["tracks"][0]["penalties"].append({"id": "gte", "points": 35, "reason": "Teste de regra inversa",
+        "conditions": [{"question": "programacao", "operator": "gte", "value": 4}]})
+    values = answers(kb, 3)
+    values["programacao"] = None
+    bounds = next(r for r in rank_careers(kb, values)["ranking"] if r["id"] == "backend")
+    for value in range(1, 6):
+        result = next(r for r in rank_careers(kb, {**values, "programacao": value})["ranking"] if r["id"] == "backend")
+        assert bounds["score_min"] <= result["score"] <= bounds["score_max"]
+
+
+def test_unknown_intervals_cover_full_scale(kb):
+    for row in rank_careers(kb, {})["ranking"]:
+        assert row["score_min"] == 0
+        assert row["score_max"] == 100
+
+
+def test_advanced_skill_without_prerequisite_is_flagged(kb):
+    plan = build_plan(kb, "backend", {"api": 3})
+    assert {item["prerequisite"] for item in plan["inconsistencies"]} == {"Fundamentos de programação", "HTTP e APIs"}
+    assert "api" not in [item["skill"] for item in plan["roadmap"]]
+    assert all(item["evidence"] for item in plan["roadmap"])

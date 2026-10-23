@@ -2,7 +2,7 @@
   "schema_version": 1,
   "metadata": {
     "title": "Consultor de Carreiras em TI",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "reviewed_at": "2026-10-22",
     "method": "Modelo educacional heurístico; pesos e metas não foram calibrados com dados de contratação.",
     "junior_definition": "Referência didática: executar tarefas básicas com orientação. Atingir as metas não comprova senioridade nem garante contratação.",
@@ -151,28 +151,36 @@
       "hours_per_level": 8,
       "prerequisites": [],
       "study": "Versionar alterações, abrir uma pull request e documentar o repositório.",
-      "url": "https://docs.github.com/pt/get-started"
+      "url": "https://docs.github.com/pt/get-started",
+      "category": "Fundamentos e desenvolvimento",
+      "evidence": "Entregar um repositório com histórico de commits, uma branch e uma pull request revisada."
     },
     "programacao": {
       "name": "Fundamentos de programação",
       "hours_per_level": 16,
       "prerequisites": [],
       "study": "Praticar variáveis, funções, coleções e tratamento de erros em Python.",
-      "url": "https://docs.python.org/pt-br/3/tutorial/"
+      "url": "https://docs.python.org/pt-br/3/tutorial/",
+      "category": "Fundamentos e desenvolvimento",
+      "evidence": "Implementar um programa de terminal com funções, validação de entrada e tratamento de erros."
     },
     "sql": {
       "name": "SQL e modelagem relacional",
       "hours_per_level": 12,
       "prerequisites": [],
       "study": "Modelar tabelas e escrever consultas com JOIN, agregações e restrições.",
-      "url": "https://www.postgresql.org/docs/current/tutorial.html"
+      "url": "https://www.postgresql.org/docs/current/tutorial.html",
+      "category": "Dados e inteligência artificial",
+      "evidence": "Entregar um esquema com duas tabelas relacionadas e consultas com JOIN e agregações."
     },
     "http": {
       "name": "HTTP e APIs",
       "hours_per_level": 8,
       "prerequisites": [],
       "study": "Estudar métodos, códigos de resposta, autenticação e contratos de API.",
-      "url": "https://developer.mozilla.org/pt-BR/docs/Web/HTTP"
+      "url": "https://developer.mozilla.org/pt-BR/docs/Web/HTTP",
+      "category": "Fundamentos e desenvolvimento",
+      "evidence": "Demonstrar requisições GET e POST e explicar respostas 200, 400, 401 e 404."
     },
     "api": {
       "name": "APIs com Python / FastAPI",
@@ -182,21 +190,27 @@
         "http"
       ],
       "study": "Construir endpoints, validar entradas e persistir dados.",
-      "url": "https://fastapi.tiangolo.com/tutorial/"
+      "url": "https://fastapi.tiangolo.com/tutorial/",
+      "category": "Fundamentos e desenvolvimento",
+      "evidence": "Entregar uma API CRUD executável, com validação e testes de respostas válidas e inválidas."
     },
     "testes": {
       "name": "Testes de software",
       "hours_per_level": 10,
       "prerequisites": [],
       "study": "Definir casos, limites, critérios de aceitação e registrar defeitos reproduzíveis.",
-      "url": "https://istqb.org/certifications/certified-tester-foundation-level-ctfl-v4-0/"
+      "url": "https://istqb.org/certifications/certified-tester-foundation-level-ctfl-v4-0/",
+      "category": "Mobile e qualidade",
+      "evidence": "Documentar casos positivos, negativos e de limite com resultados esperados e observados."
     },
     "html_css": {
       "name": "HTML e CSS",
       "hours_per_level": 12,
       "prerequisites": [],
       "study": "Construir páginas semânticas, responsivas e navegáveis por teclado.",
-      "url": "https://developer.mozilla.org/pt-BR/docs/Learn_web_development"
+      "url": "https://developer.mozilla.org/pt-BR/docs/Learn_web_development",
+      "category": "Fundamentos e desenvolvimento",
+      "evidence": "Entregar uma página responsiva em celular e desktop, navegável por teclado."
     },
     "javascript": {
       "name": "JavaScript",
@@ -205,7 +219,9 @@
         "html_css"
       ],
       "study": "Praticar eventos, manipulação de DOM e chamadas assíncronas.",
-      "url": "https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Guide"
+      "url": "https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Guide",
+      "category": "Fundamentos e desenvolvimento",
+      "evidence": "Implementar um formulário que consome uma API e trata erros e carregamento."
     },
     "react": {
       "name": "React",
@@ -214,21 +230,27 @@
         "javascript"
       ],
       "study": "Criar componentes, gerenciar estado e consumir uma API.",
-      "url": "https://react.dev/learn"
+      "url": "https://react.dev/learn",
+      "category": "Fundamentos e desenvolvimento",
+      "evidence": "Construir uma tela com componentes reutilizáveis, estado e consumo de dados."
     },
     "ux": {
       "name": "Pesquisa UX e acessibilidade",
       "hours_per_level": 10,
       "prerequisites": [],
       "study": "Entrevistar usuários, prototipar um fluxo e validar acessibilidade.",
-      "url": "https://www.w3.org/WAI/fundamentals/"
+      "url": "https://www.w3.org/WAI/fundamentals/",
+      "category": "Produto e experiência",
+      "evidence": "Registrar uma entrevista, um protótipo e os ajustes feitos após um teste de usabilidade."
     },
     "estatistica": {
       "name": "Estatística",
       "hours_per_level": 16,
       "prerequisites": [],
       "study": "Estudar distribuição, amostragem, correlação e avaliação de hipóteses.",
-      "url": "https://www.itl.nist.gov/div898/handbook/"
+      "url": "https://www.itl.nist.gov/div898/handbook/",
+      "category": "Dados e inteligência artificial",
+      "evidence": "Explicar média, dispersão e amostragem em um relatório com um conjunto de dados real."
     },
     "pandas": {
       "name": "Análise com Pandas",
@@ -237,7 +259,9 @@
         "programacao"
       ],
       "study": "Limpar dados, tratar valores ausentes e produzir uma análise reproduzível.",
-      "url": "https://pandas.pydata.org/docs/getting_started/"
+      "url": "https://pandas.pydata.org/docs/getting_started/",
+      "category": "Dados e inteligência artificial",
+      "evidence": "Entregar um notebook reproduzível que limpa dados e documenta valores ausentes."
     },
     "ml": {
       "name": "Aprendizado de máquina",
@@ -247,7 +271,9 @@
         "estatistica"
       ],
       "study": "Criar baseline, separar treino e teste e avaliar métricas sem vazamento de dados.",
-      "url": "https://scikit-learn.org/stable/getting_started.html"
+      "url": "https://scikit-learn.org/stable/getting_started.html",
+      "category": "Dados e inteligência artificial",
+      "evidence": "Comparar uma baseline e um modelo em dados de teste separados e justificar a métrica."
     },
     "visualizacao": {
       "name": "Visualização de dados",
@@ -256,7 +282,9 @@
         "pandas"
       ],
       "study": "Escolher gráficos adequados e explicar resultados e limitações.",
-      "url": "https://matplotlib.org/stable/users/explain/quick_start.html"
+      "url": "https://matplotlib.org/stable/users/explain/quick_start.html",
+      "category": "Dados e inteligência artificial",
+      "evidence": "Criar três gráficos que respondam a perguntas explícitas e expliquem suas limitações."
     },
     "etl": {
       "name": "Pipelines ETL/ELT",
@@ -266,7 +294,9 @@
         "sql"
       ],
       "study": "Construir ingestão idempotente com validações de qualidade de dados.",
-      "url": "https://airflow.apache.org/docs/"
+      "url": "https://airflow.apache.org/docs/",
+      "category": "Dados e inteligência artificial",
+      "evidence": "Executar a ingestão duas vezes sem duplicar registros e mostrar testes de qualidade."
     },
     "spark": {
       "name": "Processamento com Spark",
@@ -275,28 +305,36 @@
         "etl"
       ],
       "study": "Processar tabelas particionadas e explicar escolhas de processamento.",
-      "url": "https://spark.apache.org/docs/latest/"
+      "url": "https://spark.apache.org/docs/latest/",
+      "category": "Dados e inteligência artificial",
+      "evidence": "Processar dados particionados e registrar o plano de execução e a escolha de partições."
     },
     "linux": {
       "name": "Linux e shell",
       "hours_per_level": 12,
       "prerequisites": [],
       "study": "Praticar permissões, processos, serviços, logs e scripts de shell.",
-      "url": "https://ubuntu.com/tutorials/command-line-for-beginners"
+      "url": "https://ubuntu.com/tutorials/command-line-for-beginners",
+      "category": "Infraestrutura e segurança",
+      "evidence": "Criar um script de diagnóstico e explicar permissões, processos e logs usados."
     },
     "redes": {
       "name": "Fundamentos de redes",
       "hours_per_level": 12,
       "prerequisites": [],
       "study": "Estudar DNS, TCP/IP, TLS, sub-redes e diagnóstico de conectividade.",
-      "url": "https://developer.mozilla.org/en-US/docs/Learn_web_development/Howto/Web_mechanics/How_does_the_Internet_work"
+      "url": "https://developer.mozilla.org/en-US/docs/Learn_web_development/Howto/Web_mechanics/How_does_the_Internet_work",
+      "category": "Infraestrutura e segurança",
+      "evidence": "Diagramar uma requisição do DNS ao servidor e diagnosticar uma falha de conexão."
     },
     "seguranca": {
       "name": "Fundamentos de segurança",
       "hours_per_level": 12,
       "prerequisites": [],
       "study": "Estudar controle de acesso, riscos, criptografia e privilégio mínimo.",
-      "url": "https://www.isc2.org/certifications/cc"
+      "url": "https://www.isc2.org/certifications/cc",
+      "category": "Infraestrutura e segurança",
+      "evidence": "Produzir um modelo de ameaças simples e configurar acesso com privilégio mínimo."
     },
     "owasp": {
       "name": "Segurança de aplicações / OWASP",
@@ -306,7 +344,9 @@
         "seguranca"
       ],
       "study": "Identificar e corrigir vulnerabilidades em laboratório local autorizado.",
-      "url": "https://owasp.org/www-project-web-security-testing-guide/"
+      "url": "https://owasp.org/www-project-web-security-testing-guide/",
+      "category": "Infraestrutura e segurança",
+      "evidence": "Documentar uma falha em laboratório autorizado, a correção e o teste de regressão."
     },
     "incidentes": {
       "name": "Análise de logs e incidentes",
@@ -317,7 +357,9 @@
         "seguranca"
       ],
       "study": "Montar um laboratório isolado e documentar detecção, resposta e evidências.",
-      "url": "https://www.nist.gov/itl/smallbusinesscyber/responding-cyber-incident"
+      "url": "https://www.nist.gov/itl/smallbusinesscyber/responding-cyber-incident",
+      "category": "Infraestrutura e segurança",
+      "evidence": "Produzir uma linha do tempo de incidente simulado, evidências e ações de recuperação."
     },
     "docker": {
       "name": "Containers / Docker",
@@ -326,7 +368,9 @@
         "linux"
       ],
       "study": "Empacotar uma aplicação e configurar rede, volumes e health checks.",
-      "url": "https://docs.docker.com/get-started/"
+      "url": "https://docs.docker.com/get-started/",
+      "category": "Infraestrutura e segurança",
+      "evidence": "Subir uma aplicação com volume persistente e health check usando instruções reproduzíveis."
     },
     "ci": {
       "name": "Integração e entrega contínuas",
@@ -336,7 +380,9 @@
         "docker"
       ],
       "study": "Automatizar testes, construção e publicação de artefatos com GitHub Actions.",
-      "url": "https://docs.github.com/pt/actions"
+      "url": "https://docs.github.com/pt/actions",
+      "category": "Infraestrutura e segurança",
+      "evidence": "Executar um pipeline que testa a aplicação e bloqueia o build quando um teste falha."
     },
     "observabilidade": {
       "name": "Observabilidade",
@@ -345,7 +391,9 @@
         "linux"
       ],
       "study": "Definir indicadores, coletar métricas e criar alertas acionáveis.",
-      "url": "https://prometheus.io/docs/introduction/overview/"
+      "url": "https://prometheus.io/docs/introduction/overview/",
+      "category": "Infraestrutura e segurança",
+      "evidence": "Criar um painel com uma métrica útil e demonstrar um alerta em falha simulada."
     },
     "cloud": {
       "name": "Fundamentos de nuvem",
@@ -354,7 +402,9 @@
         "redes"
       ],
       "study": "Estudar computação, armazenamento, IAM, custos e responsabilidade compartilhada.",
-      "url": "https://aws.amazon.com/training/digital/"
+      "url": "https://aws.amazon.com/training/digital/",
+      "category": "Infraestrutura e segurança",
+      "evidence": "Diagramar recursos de nuvem, suas permissões, estimativa de custos e plano de remoção."
     },
     "iac": {
       "name": "Infraestrutura como código",
@@ -363,7 +413,9 @@
         "cloud"
       ],
       "study": "Descrever uma infraestrutura, revisar o plano e organizar variáveis e estado.",
-      "url": "https://developer.hashicorp.com/terraform/tutorials"
+      "url": "https://developer.hashicorp.com/terraform/tutorials",
+      "category": "Infraestrutura e segurança",
+      "evidence": "Entregar configuração versionada, validação e um plano de mudanças revisável."
     },
     "arquitetura": {
       "name": "Arquitetura de soluções",
@@ -373,7 +425,9 @@
         "seguranca"
       ],
       "study": "Diagramar uma solução e justificar disponibilidade, custo e recuperação.",
-      "url": "https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html"
+      "url": "https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html",
+      "category": "Infraestrutura e segurança",
+      "evidence": "Registrar decisões de custo, disponibilidade e recuperação em um diagrama explicado."
     },
     "flutter": {
       "name": "Dart e Flutter",
@@ -382,7 +436,9 @@
         "programacao"
       ],
       "study": "Construir telas, navegação, estado e integração HTTP.",
-      "url": "https://docs.flutter.dev/learn"
+      "url": "https://docs.flutter.dev/learn",
+      "category": "Mobile e qualidade",
+      "evidence": "Executar um aplicativo com duas telas, navegação e tratamento de estados de erro."
     },
     "mobile_storage": {
       "name": "Persistência e ciclo de vida mobile",
@@ -391,7 +447,9 @@
         "flutter"
       ],
       "study": "Persistir dados offline e tratar erros, reconexão e ciclo de vida.",
-      "url": "https://docs.flutter.dev/cookbook/persistence"
+      "url": "https://docs.flutter.dev/cookbook/persistence",
+      "category": "Mobile e qualidade",
+      "evidence": "Demonstrar persistência após reinício e funcionamento sem conexão."
     },
     "automacao_testes": {
       "name": "Automação de testes",
@@ -401,28 +459,36 @@
         "testes"
       ],
       "study": "Automatizar cenários positivos, negativos e limites com pytest ou Playwright.",
-      "url": "https://playwright.dev/python/docs/intro"
+      "url": "https://playwright.dev/python/docs/intro",
+      "category": "Mobile e qualidade",
+      "evidence": "Executar testes automatizados positivos, negativos e de limite com relatório de falhas."
     },
     "produto": {
       "name": "Discovery e métricas de produto",
       "hours_per_level": 12,
       "prerequisites": [],
       "study": "Definir problema, hipóteses, indicadores e experimentos para validar valor.",
-      "url": "https://www.scrum.org/resources/evidence-based-management-guide"
+      "url": "https://www.scrum.org/resources/evidence-based-management-guide",
+      "category": "Produto e experiência",
+      "evidence": "Definir problema, hipótese de valor, métrica de sucesso e experimento para um MVP."
     },
     "agil": {
       "name": "Scrum e priorização",
       "hours_per_level": 10,
       "prerequisites": [],
       "study": "Organizar backlog, definir objetivo de produto e priorizar por valor.",
-      "url": "https://scrumguides.org/"
+      "url": "https://scrumguides.org/",
+      "category": "Produto e experiência",
+      "evidence": "Entregar backlog ordenado, objetivo de produto e justificativa de prioridades."
     },
     "comunicacao": {
       "name": "Comunicação e stakeholders",
       "hours_per_level": 8,
       "prerequisites": [],
       "study": "Produzir uma especificação curta, registrar decisões e apresentar trade-offs.",
-      "url": "https://www.scrum.org/resources/what-is-a-product-owner"
+      "url": "https://www.scrum.org/resources/what-is-a-product-owner",
+      "category": "Produto e experiência",
+      "evidence": "Apresentar uma decisão de produto com contexto, alternativas, responsáveis e próximos passos."
     }
   },
   "tracks": [
