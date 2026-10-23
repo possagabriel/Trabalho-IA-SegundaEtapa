@@ -214,7 +214,7 @@ def build_plan(kb: dict, track_id: str, knowledge: dict[str, int], hours_per_wee
                      if not (set(kb["skills"][skill]["prerequisites"]) & remaining.keys())]
         if not available:
             raise ValueError("Não foi possível ordenar os pré-requisitos.")
-        item = sorted(available, key=lambda g: (-g["priority"], g["skill"]))[0]
+        item = min(available, key=lambda g: (-g["priority"], g["skill"]))
         item = {**item, "order": len(roadmap) + 1,
                 "start_week": elapsed // hours_per_week + 1,
                 "end_week": math.ceil((elapsed + item["hours"]) / hours_per_week)}
