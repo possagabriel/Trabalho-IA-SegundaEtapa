@@ -4,9 +4,30 @@ Implementação do trabalho **“Sistema Especialista Inteligente para Mapeament
 
 O sistema cruza afinidades e objetivos com regras ponderadas, compara dez trilhas e gera um roteiro de estudos a partir das competências atuais. A aplicação e os relatórios estão em português.
 
+![Tela inicial do Rotas TI](docs/images/inicio-desktop.png)
+
+## O que a aplicação oferece
+
+- Questionário em etapas, com interesses separados das competências e cinco grupos de autoavaliação.
+- Ranking explicável com faixa de variação para respostas desconhecidas.
+- Comparação de até três carreiras por afinidade, competências, lacunas e esforço de estudo.
+- Plano com primeiro passo destacado, pré-requisitos, entregas práticas e ritmo semanal ajustável.
+- Salvamento e retomada de avaliações JSON, além de relatório Markdown.
+- Três perfis demonstrativos para explorar o resultado sem preencher tudo.
+
+![Plano de ação personalizado](docs/images/plano-desktop.png)
+
 ## Executar
 
 Requer Python 3.10 ou superior. Na pasta do projeto:
+
+No Linux/macOS, o atalho prepara o ambiente caso ainda não exista e inicia a aplicação:
+
+```bash
+./iniciar.sh
+```
+
+Ou execute manualmente:
 
 ```bash
 python3 -m venv .venv
@@ -38,9 +59,9 @@ python3 exemplo.py
 3. **Objetivos de carreira:** seis perguntas sobre atividades desejadas.
 4. **Resultado:** Top 3, gráfico das dez trilhas, matriz de pontuações, justificativas e plano da trilha escolhida.
 
-Na tela final, escolha qualquer trilha para visualizar suas lacunas, ordem de estudo, duração estimada, materiais oficiais, projeto de portfólio e certificações opcionais. Baixe o relatório em Markdown ou a avaliação completa em JSON. É possível voltar às etapas e editar respostas sem perder o que já foi salvo. Alterações em formulários são salvas ao usar seus botões de navegação.
+Na tela final, escolha qualquer trilha para visualizar suas lacunas, ordem de estudo, duração estimada, materiais oficiais, projeto de portfólio e certificações opcionais. Ajuste as horas semanais para recalcular o calendário e use a aba de comparação para avaliar até três caminhos. Cada etapa traz uma entrega prática para demonstrar aprendizagem. Baixe o relatório em Markdown ou a avaliação completa em JSON. É possível voltar às etapas e editar respostas sem perder o que já foi salvo. Alterações em formulários são salvas ao usar seus botões de navegação.
 
-As respostas permanecem na sessão do Streamlit; não há banco de dados nem envio de resultados a serviços externos. Uma nova sessão ou a opção “Nova avaliação” reinicia o preenchimento. A exportação JSON registra os dados; não há importação pela interface nesta versão.
+As respostas permanecem na sessão do Streamlit; não há banco de dados nem envio de resultados a serviços externos. Use **Salvar ou retomar avaliação** na barra lateral para baixar o progresso confirmado ou restaurar um arquivo JSON de até 1 MB. A importação valida as entradas e recalcula resultados com a base atual; pontuações contidas no arquivo não são usadas como verdade. Arquivos exportados pela primeira versão também são aceitos. Uma nova sessão ou a opção “Nova avaliação” reinicia o preenchimento.
 
 ## Requisitos do enunciado
 
@@ -62,12 +83,20 @@ As respostas permanecem na sessão do Streamlit; não há banco de dados nem env
 ## Organização
 
 ```text
-app.py                     Interface e navegação Streamlit
+app.py                     Entrada da aplicação e carregamento da base
 regras_carreiras.json       Perguntas, pesos, penalidades, competências e trilhas
 career/engine.py            Validação, inferência, roadmap e exportação
+career/assessment.py        Salvamento e validação de avaliações importadas
+career/ui.py                Páginas e navegação Streamlit
+career/charts.py            Gráficos Altair com escala fixa e comparação
+assets/style.css            Identidade visual e ajustes responsivos
+data/perfis_exemplo.json    Três perfis fictícios para demonstração
 exemplo.py                 Demonstração em terminal, sem dependências externas
 tests/test_engine.py        Testes de regras e casos limite
 tests/test_app.py           Testes de navegação com Streamlit AppTest
+tests/test_assessment.py    Testes de importação e compatibilidade de arquivos
+scripts/check_browser.py   Fluxo real de navegador, downloads e screenshots
+iniciar.sh                 Atalho de execução para Linux/macOS
 docs/RELATORIO_TECNICO.md    Método, arquitetura, decisões e limitações
 docs/MATRIZ_PESOS.md        Matriz das correlações usadas pelo motor
 docs/EXEMPLO_RESULTADO.md   Relatório gerado pelo perfil demonstrativo
@@ -85,6 +114,16 @@ python -m pytest -q
 
 Também é possível executar somente o motor com `python -m pytest tests/test_engine.py -q`. Os testes da interface usam a ferramenta oficial `streamlit.testing.v1.AppTest`, sem exigir navegador. Eles não substituem uma inspeção visual em navegador.
 
+Para executar a verificação adicional de navegador, mantenha a aplicação aberta em outro terminal:
+
+```bash
+python -m pip install -r requirements-browser.txt
+python -m playwright install chromium
+python scripts/check_browser.py
+```
+
+Esse teste verifica desktop e celular, comparação, downloads reais de Markdown/JSON e restauração de uma avaliação. Salva capturas em `docs/images`. Use `--url http://127.0.0.1:8502` para outra porta. Playwright não é necessário para usar a aplicação nem para a suíte principal.
+
 ## Modelo de pontuação
 
 Para cada resposta conhecida `r`, a afinidade normalizada é `n = (r − 1) / 4`. O valor 1 corresponde a 0; o valor 5 corresponde a 1. Para “Não sei”, usa-se 0,5 e a pergunta não conta como evidência respondida.
@@ -100,6 +139,8 @@ Trilhas até três pontos percentuais do primeiro lugar são apresentadas como r
 
 Os percentuais das trilhas são independentes, não somam 100% e não representam probabilidade de contratação. Horas disponíveis alteram o calendário; conhecimento atual altera as lacunas; afinidades e objetivos alteram o ranking.
 
+Para respostas pendentes, o motor também calcula limites conservadores: no inferior, considera contribuição desconhecida mínima e todas as penalidades ainda possíveis; no superior, contribuição máxima e apenas penalidades já confirmadas. A faixa contém os resultados possíveis, mas pode ser mais larga que a faixa exata quando regras interagem. Não é um intervalo de confiança estatístico. Com todas as respostas conhecidas, os limites coincidem com a pontuação.
+
 ## Conhecimento e senioridade
 
 | Nível | Interpretação |
@@ -111,6 +152,8 @@ Os percentuais das trilhas são independentes, não somam 100% e não representa
 | 4 | Aprofundo, otimizo e oriento |
 
 A meta Júnior desta base é o nível 2 nas competências exigidas. Trata-se de uma referência educacional, não de uma classificação profissional validada. O sistema mostra “Metas iniciais atendidas” quando não há lacunas; não atribui cargos de Pleno ou Sênior apenas pela autoavaliação.
+
+Se o usuário declara domínio de uma tecnologia sem os fundamentos exigidos, o plano sinaliza essa inconsistência para revisão, mantendo os valores informados. As entregas práticas ajudam a conferir a autoavaliação com evidências.
 
 ## Alterar a base de conhecimento
 
@@ -125,6 +168,7 @@ O projeto está preparado para versionamento; `.venv`, caches e segredos são ig
 O método é uma modelagem didática própria. As fontes abaixo orientam o uso das ferramentas e as sugestões de estudo; **não validam os pesos, limiares ou metas definidos para este exercício**.
 
 - [Streamlit: formulários e submissão em lote](https://docs.streamlit.io/develop/api-reference/execution-flow/st.form).
+- [Streamlit: gráficos Altair](https://docs.streamlit.io/develop/api-reference/charts/st.altair_chart), [upload de arquivos](https://docs.streamlit.io/develop/api-reference/widgets/st.file_uploader) e [containers](https://docs.streamlit.io/develop/api-reference/layout/st.container).
 - [GitHub: certificações](https://learn.github.com/certifications).
 - [AWS: Solutions Architect – Associate](https://aws.amazon.com/certification/certified-solutions-architect-associate/), [Data Engineer – Associate](https://aws.amazon.com/certification/certified-data-engineer-associate/) e [AI Practitioner](https://aws.amazon.com/certification/certified-ai-practitioner/).
 - [ISC2: Certified in Cybersecurity](https://www.isc2.org/certifications/cc).

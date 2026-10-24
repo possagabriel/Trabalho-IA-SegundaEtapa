@@ -31,11 +31,15 @@ flowchart LR
 
 O motor usa somente a biblioteca padrão do Python e pode ser executado independentemente. Streamlit controla a interação; Pandas organiza tabelas e o gráfico. A base JSON contém todo o conhecimento de domínio. Não foi necessário usar Experta porque o enunciado também permite um motor próprio de soma ponderada.
 
+A interface foi separada em `career/ui.py`, os gráficos em `career/charts.py` e a importação/exportação de avaliações em `career/assessment.py`. `app.py` apenas configura a página, carrega a base e inicia a interface. Altair fornece gráficos com escala fixa de 0 a 100 e comparação de afinidade e cobertura de competências.
+
 ## 3. Fase 1 — Engenharia do conhecimento
 
 Foram definidas 20 perguntas: 14 afinidades técnicas e seis preferências de atuação. As respostas conhecidas usam uma escala Likert de 1 a 5. A opção desconhecida é representada por `null`, distinguindo ausência de informação de baixa afinidade.
 
 O catálogo tem 33 competências, compartilhadas entre trilhas, evitando perguntar repetidamente o nível do usuário em Git, SQL ou programação. Cada competência tem descrição, pré-requisitos, estimativa de horas por nível e fonte de estudo. Cada trilha reúne pesos, penalidades, metas, certificações e projeto.
+
+Na base 1.1.0, as competências também recebem uma categoria de apresentação e uma entrega prática (`evidence`), usada como evidência de aprendizagem no roteiro e no relatório. Os campos são opcionais para manter compatibilidade com bases anteriores. Perfis fictícios de demonstração ficam em `data/perfis_exemplo.json`.
 
 Os pesos de 1 a 5 representam relevância relativa dentro da trilha: 5 para atividades centrais; 3–4 para competências de forte apoio; 1–2 para aspectos complementares. Perguntas ausentes do mapa de pesos contribuem zero. A [matriz de pesos](MATRIZ_PESOS.md) permite revisar a modelagem.
 
@@ -86,6 +90,12 @@ Trilhas até três pontos da primeira são consideradas próximas. O identificad
 
 Os valores não são probabilidades. O tratamento de incerteza adotado é gradual e heurístico; não se apresenta como inferência bayesiana ou fator de certeza estatisticamente calibrado.
 
+### Faixa de resultados com respostas desconhecidas
+
+Além da pontuação neutra, cada trilha tem um limite inferior e superior conservadores. O inferior usa somente as contribuições conhecidas e desconta todas as penalidades não descartadas pelas respostas conhecidas. O superior soma o máximo possível das contribuições pendentes e desconta somente penalidades confirmadas. Ambos ficam limitados a 0–100.
+
+Esses limites contêm as pontuações possíveis, mas não precisam ser atingíveis simultaneamente quando regras interagem. Por isso são chamados de faixa conservadora, nunca de intervalo de confiança. Com todas as respostas conhecidas, ambos coincidem com o resultado. Testes enumeram combinações de respostas pendentes, inclusive regras `gte`, para verificar a inclusão dos resultados na faixa.
+
 ## 5. Fase 3 — Lacunas e roteiro
 
 O nível atual vai de 0 a 4. Para a referência Júnior, a base inicial exige nível 2: realizar tarefas básicas com orientação. A lacuna de uma competência é `max(0, meta − nível atual)`.
@@ -104,11 +114,17 @@ Cada etapa demanda `lacuna × horas por nível`. O calendário divide o esforço
 
 Cada trilha tem um projeto com entregáveis. A lista de competências faltantes torna explícito o foco de prática individual. Certificações são alternativas opcionais, algumas posteriores ao nível inicial. Por exemplo, CKA requer estudo posterior de Kubernetes; PSPO I trata de Product Ownership e não cobre toda a atuação em Product Management.
 
+Cada etapa do roteiro inclui uma entrega verificável, como uma API CRUD com testes ou uma ingestão idempotente. O primeiro passo aparece em destaque. Conhecimento avançado declarado sem pré-requisitos suficientes produz um aviso de revisão da autoavaliação, sem alterar automaticamente os níveis informados.
+
 ## 6. Fase 4 — Interface
 
 O wizard mantém perfil, respostas e competências em `st.session_state`, separados das chaves transitórias dos widgets. Cada formulário grava seus dados tanto ao avançar quanto ao voltar. Isso permite revisar o perfil sem perder as avaliações anteriores.
 
 Os resultados incluem Top 3, gráfico horizontal, tabela comparativa, seleção de qualquer trilha, decomposição do cálculo, lacunas, roteiro, projeto e certificados opcionais. Há exportações Markdown e JSON. O JSON contém as entradas e saídas necessárias para auditar a avaliação.
+
+A versão revisada organiza interesses e competências em abas e distribui as 33 competências em cinco grupos. Os resultados têm abas para plano, comparação e explicação. É possível comparar até três trilhas e alterar as horas semanais com recálculo imediato do cronograma. Os gráficos usam escala 0–100 e tabelas equivalentes para consulta dos dados.
+
+A barra lateral permite salvar progresso confirmado e restaurar avaliações JSON de até 1 MB. A importação valida formato, nome, momento profissional, horas e todas as respostas antes de substituir a sessão. Resultados importados são ignorados e recalculados; diferenças de versão da base são informadas. Exportações legadas sem versão de formato permanecem aceitas.
 
 Não há persistência em banco nem criação automática de repositórios GitHub. O GitHub aparece como destino sugerido para o portfólio. O uso da aplicação não depende de serviços pagos.
 
@@ -135,6 +151,8 @@ A suíte cobre os seguintes cenários:
 | Exploração | Troca de trilha e disponibilização das exportações |
 
 Execute `python -m pytest -q` para obter o resultado no ambiente utilizado. Os testes da interface usam AppTest; não simulam cliques de download em um navegador real.
+
+A suíte ampliada inclui importações inválidas, arquivos legados, resultados forjados, números extremos, intervalos de pontuação, pré-requisitos inconsistentes, comparação e recálculo de calendário. O script opcional `scripts/check_browser.py` complementa AppTest com Chromium real, fluxos de desktop e celular, verificação de rolagem horizontal, downloads de arquivos e restauração. Capturas ficam em `docs/images`.
 
 ## 8. Demonstração sugerida
 

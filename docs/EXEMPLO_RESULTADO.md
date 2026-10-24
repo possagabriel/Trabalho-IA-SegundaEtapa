@@ -2,7 +2,7 @@
 
 Participante: Perfil demonstrativo de infraestrutura
 Momento atual: Não informado
-Base de conhecimento: 1.0.0
+Base de conhecimento: 1.1.0
 
 ## Compatibilidade com as trilhas
 
@@ -54,14 +54,19 @@ O prazo considera apenas as lacunas de estudo; projeto e preparação para exame
 
 1. **Fundamentos de redes** — semanas 1–4, 24 h.
    Estudar DNS, TCP/IP, TLS, sub-redes e diagnóstico de conectividade. [Material oficial](https://developer.mozilla.org/en-US/docs/Learn_web_development/Howto/Web_mechanics/How_does_the_Internet_work).
+   **Evidência de aprendizagem:** Diagramar uma requisição do DNS ao servidor e diagnosticar uma falha de conexão.
 2. **Linux e shell** — semanas 5–6, 12 h.
    Praticar permissões, processos, serviços, logs e scripts de shell. [Material oficial](https://ubuntu.com/tutorials/command-line-for-beginners).
+   **Evidência de aprendizagem:** Criar um script de diagnóstico e explicar permissões, processos e logs usados.
 3. **Containers / Docker** — semanas 7–10, 24 h.
    Empacotar uma aplicação e configurar rede, volumes e health checks. [Material oficial](https://docs.docker.com/get-started/).
+   **Evidência de aprendizagem:** Subir uma aplicação com volume persistente e health check usando instruções reproduzíveis.
 4. **Integração e entrega contínuas** — semanas 11–14, 24 h.
    Automatizar testes, construção e publicação de artefatos com GitHub Actions. [Material oficial](https://docs.github.com/pt/actions).
+   **Evidência de aprendizagem:** Executar um pipeline que testa a aplicação e bloqueia o build quando um teste falha.
 5. **Observabilidade** — semanas 15–18, 24 h.
    Definir indicadores, coletar métricas e criar alertas acionáveis. [Material oficial](https://prometheus.io/docs/introduction/overview/).
+   **Evidência de aprendizagem:** Criar um painel com uma métrica útil e demonstrar um alerta em falha simulada.
 
 ### Portfólio: Entrega contínua de um serviço
 
