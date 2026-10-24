@@ -1,0 +1,105 @@
+[
+  {
+    "label": "Infraestrutura e automação",
+    "profile": {
+      "name": "Demonstração",
+      "hours": 6,
+      "experience": "Já estudo ou desenvolvo projetos"
+    },
+    "answers": {
+      "logica": 3,
+      "matematica": 3,
+      "programacao": 3,
+      "visual": 3,
+      "empatia": 3,
+      "dados": 3,
+      "infra": 5,
+      "redes": 5,
+      "seguranca": 3,
+      "automacao": 5,
+      "detalhes": 5,
+      "comunicacao": 3,
+      "negocio": 3,
+      "mobile": 3,
+      "incidentes": 5,
+      "construir": 3,
+      "investigar": 3,
+      "operar": 5,
+      "liderar": 3,
+      "arquitetar": 4
+    },
+    "knowledge": {
+      "git": 2,
+      "linux": 1
+    }
+  },
+  {
+    "label": "Dados e desenvolvimento web",
+    "profile": {
+      "name": "Demonstração",
+      "hours": 6,
+      "experience": "Já estudo ou desenvolvo projetos"
+    },
+    "answers": {
+      "logica": 5,
+      "matematica": 5,
+      "programacao": 5,
+      "visual": 5,
+      "empatia": 5,
+      "dados": 5,
+      "infra": 3,
+      "redes": 3,
+      "seguranca": 3,
+      "automacao": 3,
+      "detalhes": 3,
+      "comunicacao": 3,
+      "negocio": 3,
+      "mobile": 3,
+      "incidentes": 3,
+      "construir": 5,
+      "investigar": 5,
+      "operar": 3,
+      "liderar": 3,
+      "arquitetar": 3
+    },
+    "knowledge": {
+      "git": 2,
+      "programacao": 2,
+      "html_css": 1
+    }
+  },
+  {
+    "label": "Produto e experiência",
+    "profile": {
+      "name": "Demonstração",
+      "hours": 6,
+      "experience": "Já estudo ou desenvolvo projetos"
+    },
+    "answers": {
+      "logica": 3,
+      "matematica": 3,
+      "programacao": 3,
+      "visual": 4,
+      "empatia": 5,
+      "dados": 3,
+      "infra": 3,
+      "redes": 3,
+      "seguranca": 3,
+      "automacao": 3,
+      "detalhes": 3,
+      "comunicacao": 5,
+      "negocio": 5,
+      "mobile": 3,
+      "incidentes": 3,
+      "construir": 3,
+      "investigar": 4,
+      "operar": 3,
+      "liderar": 5,
+      "arquitetar": 3
+    },
+    "knowledge": {
+      "ux": 1,
+      "comunicacao": 2
+    }
+  }
+]

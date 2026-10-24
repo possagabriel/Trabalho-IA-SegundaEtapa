@@ -1,0 +1,43 @@
+/* Layout local, sem fontes ou recursos de terceiros. */
+.stMainBlockContainer { max-width: 1180px; padding-top: 2rem; padding-bottom: 4rem; }
+[data-testid="stSidebar"] { border-right: 1px solid #dae5e5; }
+[data-testid="stForm"] { background: #fff; border: 1px solid #dce6e6; border-radius: 20px; padding: 1.5rem; }
+[data-testid="stMetricValue"] { font-weight: 750; letter-spacing: -.035em; }
+[data-testid="stMetricLabel"] { color: #41585d; }
+[data-testid="stExpander"] { background: #fff; border-radius: 14px; }
+.stButton button, .stDownloadButton button, .stFormSubmitButton button { border-radius: 10px; min-height: 2.7rem; }
+.st-key-recommendation_0 { background: #eaf6f1; border-radius: 16px; }
+.brand { display: flex; align-items: center; gap: 12px; margin: .5rem 0 1.8rem; }
+.brand-mark { background: #123e3b; color: #bce9b8; border-radius: 12px; padding: 9px 13px; font-size: 25px; font-weight: 800; }
+.brand-name { font-size: 23px; font-weight: 800; letter-spacing: -.04em; color: #123e3b; }
+.brand-sub { font-size: 12px; color: #52706f; }
+.hero { position: relative; overflow: hidden; padding: 2.6rem; margin: .4rem 0 1.8rem; border-radius: 24px; background: linear-gradient(115deg, #133c3a, #1d5550); color: #fff; }
+.hero::after { content: '↗'; position: absolute; right: 2rem; top: -.4rem; font-size: 210px; font-weight: 300; color: #ffffff0d; pointer-events: none; }
+.hero .eyebrow { color: #bce9b8; font-size: 12px; font-weight: 750; letter-spacing: .16em; text-transform: uppercase; }
+.hero h1 { max-width: 720px; font-size: clamp(2rem, 4vw, 3.15rem); letter-spacing: -.055em; line-height: 1.12; margin: .8rem 0 1rem; padding: 0; color: #fff; }
+.hero p { max-width: 610px; font-size: 16px; line-height: 1.65; color: #dcebe8; margin: 0; }
+.hero-tags { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 1.6rem; }
+.hero-tags span { border: 1px solid #ffffff35; border-radius: 30px; padding: 5px 12px; font-size: 12px; color: #edf8f3; }
+.step { display: flex; align-items: center; gap: 12px; padding: 12px; margin-bottom: 6px; border-radius: 12px; color: #637776; font-size: 14px; }
+.step b { width: 27px; height: 27px; border-radius: 50%; display: grid; place-items: center; background: #e2eae7; font-size: 12px; }
+.step.active { background: #dcefe7; color: #123e3b; font-weight: 700; }
+.step.active b { background: #176c58; color: white; }
+.step.done b { background: #e1eee6; color: #196b54; }
+.section-kicker { font-size: 12px; font-weight: 750; letter-spacing: .12em; text-transform: uppercase; color: #44766b; margin: .7rem 0 .3rem; }
+.overview { background: #fff; border: 1px solid #dce6e6; border-radius: 16px; padding: 1.15rem 1.3rem; min-height: 126px; margin-bottom: 1.2rem; }
+.overview strong { display: block; color: #164e43; font-size: 16px; margin-bottom: .4rem; }
+.overview p { color: #58706e; font-size: 14px; line-height: 1.5; margin: 0; }
+.next-action { border-left: 4px solid #25806a; padding: 1.3rem 1.5rem; background: #edf7f1; border-radius: 0 14px 14px 0; margin: 1rem 0; }
+.next-action small { color: #396a5c; font-weight: 750; text-transform: uppercase; letter-spacing: .1em; }
+.next-action h3 { margin: .4rem 0; padding: 0; font-size: 23px; color: #153f36; }
+.next-action p { margin: .3rem 0; color: #405c54; }
+.app-footer { border-top: 1px solid #dce6e6; margin-top: 2rem; padding-top: 1rem; color: #647571; font-size: 12px; }
+@media (max-width: 640px) {
+  .stMainBlockContainer { padding: 3.5rem 1rem 3rem; }
+  .hero { padding: 1.3rem; border-radius: 18px; }
+  .hero h1 { font-size: 1.9rem; }
+  .hero-tags, .st-key-intro_overview, [data-testid="stHorizontalBlock"]:has(.overview) { display: none; }
+  .hero::after { display: none; }
+  [data-testid="stForm"] { padding: 1rem; }
+  .overview { min-height: auto; }
+}
