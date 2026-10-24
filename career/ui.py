@@ -7,8 +7,13 @@ from pathlib import Path
 import pandas as pd
 import streamlit as st
 
-from career.assessment import EXPERIENCES, empty_assessment, export_assessment, import_assessment
-from career.charts import compatibility_chart, comparison_chart
+from career.assessment import (
+    EXPERIENCES,
+    empty_assessment,
+    export_assessment,
+    import_assessment,
+)
+from career.charts import comparison_chart, compatibility_chart
 from career.engine import build_plan, rank_careers, report_markdown
 
 ROOT = Path(__file__).resolve().parent.parent

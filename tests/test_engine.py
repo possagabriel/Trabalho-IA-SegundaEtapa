@@ -4,7 +4,13 @@ import math
 
 import pytest
 
-from career.engine import build_plan, load_knowledge, rank_careers, report_markdown, validate_knowledge
+from career.engine import (
+    build_plan,
+    load_knowledge,
+    rank_careers,
+    report_markdown,
+    validate_knowledge,
+)
 
 
 @pytest.fixture
