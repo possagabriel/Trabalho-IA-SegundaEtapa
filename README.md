@@ -161,7 +161,7 @@ Edite `regras_carreiras.json`. Os pesos são não negativos, e sua soma em cada 
 
 ## Entrega e GitHub
 
-O projeto está preparado para versionamento; `.venv`, caches e segredos são ignorados. Não há repositório remoto configurado ou publicação automática. O enunciado recomenda GitHub, mas não informa conta ou repositório de entrega. Ao publicar, envie os arquivos do projeto e mantenha `.venv` fora do repositório.
+O projeto está versionado e publicado em [possagabriel/Trabalho-IA-SegundaEtapa](https://github.com/possagabriel/Trabalho-IA-SegundaEtapa), branch `main`. `.venv`, caches e segredos são ignorados; o repositório contém apenas os arquivos do projeto.
 
 ## Referências
 
