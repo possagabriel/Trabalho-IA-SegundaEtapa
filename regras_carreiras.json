@@ -1,8 +1,8 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "metadata": {
     "title": "Consultor de Carreiras em TI",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "reviewed_at": "2026-10-22",
     "method": "Modelo educacional heurístico; pesos e metas não foram calibrados com dados de contratação.",
     "junior_definition": "Referência didática: executar tarefas básicas com orientação. Atingir as metas não comprova senioridade nem garante contratação.",
@@ -22,6 +22,26 @@
     "2": "Faço tarefas básicas com orientação",
     "3": "Realizo projetos com autonomia",
     "4": "Aprofundo, otimizo e oriento"
+  },
+  "seniority_levels": {
+    "junior": {
+      "name": "Júnior",
+      "target_floor": 1,
+      "description": "Cumprir as metas iniciais de cada competência, realizando tarefas com orientação.",
+      "portfolio_guidance": "Construa a versão básica do projeto, documente como executar e peça revisão das entregas."
+    },
+    "pleno": {
+      "name": "Pleno",
+      "target_floor": 3,
+      "description": "Praticar as competências da trilha com autonomia, justificando decisões e resolvendo problemas.",
+      "portfolio_guidance": "Evolua o projeto com autonomia: registre decisões e alternativas, automatize validações e demonstre a solução de uma falha realista."
+    },
+    "senior": {
+      "name": "Sênior",
+      "target_floor": 4,
+      "description": "Aprofundar as competências da trilha, avaliar impactos e orientar outras pessoas.",
+      "portfolio_guidance": "Amplie o projeto com análise de riscos e impactos, compare alternativas com métricas e produza um guia de revisão e orientação para colaboradores."
+    }
   },
   "questions": [
     {

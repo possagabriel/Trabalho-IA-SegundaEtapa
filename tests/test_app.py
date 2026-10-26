@@ -101,3 +101,20 @@ def test_complete_knowledge_has_no_study_steps():
     click(app, "Gerar meu plano")
     assert next(m.value for m in app.metric if m.label == "Lacunas a trabalhar") == "0"
     assert next(m.value for m in app.metric if m.label == "Estudo estimado") == "0 semanas"
+
+
+def test_seniority_changes_plan_and_survives_review():
+    app = AppTest.from_file(str(APP), default_timeout=20).run()
+    click(app, "Explorar demonstração")
+    scores = [(m.label, m.value) for m in app.metric[:3]]
+    initial_weeks = next(m.value for m in app.metric if m.label == "Estudo estimado")
+    app.selectbox(key="target_level").set_value("senior").run()
+    assert not app.exception
+    assert app.session_state["profile"]["target_level"] == "senior"
+    assert [(m.label, m.value) for m in app.metric[:3]] == scores
+    assert next(m.value for m in app.metric if m.label == "Estudo estimado") != initial_weeks
+    requirements = next(frame.value for frame in app.dataframe if "Meta" in frame.value.columns)
+    assert set(requirements["Meta"]) == {4}
+    click(app, "Revisar minhas respostas")
+    reach_results(app)
+    assert app.selectbox(key="target_level").value == "senior"

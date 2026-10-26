@@ -2,7 +2,7 @@
 
 Participante: Perfil demonstrativo de infraestrutura
 Momento atual: Não informado
-Base de conhecimento: 1.1.0
+Base de conhecimento: 1.2.0
 
 ## Compatibilidade com as trilhas
 
@@ -22,8 +22,9 @@ Os percentuais expressam aderência ao modelo; não são probabilidades de contr
 ## Trilha escolhida: DevOps/SRE
 
 Pontuação base: 93.1%; penalidades: 0.0 pontos.
-Cobertura das metas iniciais: 25.0%. Competências em desenvolvimento.
-Referência didática: executar tarefas básicas com orientação. Atingir as metas não comprova senioridade nem garante contratação.
+Meta de estudo: Júnior. Cumprir as metas iniciais de cada competência, realizando tarefas com orientação.
+Cobertura das metas: 25.0%. Competências em desenvolvimento.
+As referências são didáticas; a autoavaliação não comprova senioridade profissional.
 
 ### Explicação do cálculo
 
@@ -79,6 +80,8 @@ Containerizar uma aplicação e automatizar a entrega com monitoramento.
 Pratique especialmente: Fundamentos de redes, Linux e shell, Containers / Docker, Integração e entrega contínuas, Observabilidade.
 
 Aplicar no projeto as competências estudadas e registrar evidências de evolução.
+
+Construa a versão básica do projeto, documente como executar e peça revisão das entregas.
 
 ### Certificações opcionais
 

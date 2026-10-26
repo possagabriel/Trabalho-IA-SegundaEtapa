@@ -19,7 +19,7 @@ def _number(value: Any, low: float, high: float, label: str) -> None:
 def validate_knowledge(kb: dict) -> None:
     """Falha cedo em referências inválidas, pesos nulos e ciclos de estudo."""
     try:
-        if kb["schema_version"] != 1:
+        if type(kb["schema_version"]) is not int or kb["schema_version"] != 2:
             raise ValueError("Versão da base de conhecimento não suportada.")
         cfg = kb["scoring"]
         _number(cfg["min"], 1, 1, "Escala mínima")
@@ -28,6 +28,16 @@ def validate_knowledge(kb: dict) -> None:
             _number(cfg[key], 0, 1, key)
         for key in ("tie_tolerance", "low_compatibility"):
             _number(cfg[key], 0, 100, key)
+        levels = kb["seniority_levels"]
+        if not isinstance(levels, dict) or "junior" not in levels:
+            raise ValueError("Defina ao menos a referência Júnior de senioridade.")
+        for level in levels.values():
+            _number(level["target_floor"], 1, 4, "Meta mínima de senioridade")
+            if type(level["target_floor"]) is not int:
+                raise ValueError("Meta de senioridade deve ser inteira.")
+            for field in ("name", "description", "portfolio_guidance"):
+                if not isinstance(level[field], str) or not level[field].strip():
+                    raise ValueError("Referência de senioridade incompleta.")
         questions = {q["id"]: q for q in kb["questions"]}
         if not questions or len(questions) != len(kb["questions"]):
             raise ValueError("Perguntas vazias ou com identificadores repetidos.")
@@ -188,7 +198,8 @@ def rank_careers(kb: dict, answers: dict[str, int | None]) -> dict:
             "low_compatibility": best["score"] < cfg["low_compatibility"]}
 
 
-def build_plan(kb: dict, track_id: str, knowledge: dict[str, int], hours_per_week: int = 6) -> dict:
+def build_plan(kb: dict, track_id: str, knowledge: dict[str, int], hours_per_week: int = 6,
+               target_level: str = "junior") -> dict:
     """Ordena lacunas por pré-requisitos e prioridade; estima esforço restante."""
     _number(hours_per_week, 1, 40, "Horas semanais")
     if not isinstance(hours_per_week, int):
@@ -202,25 +213,30 @@ def build_plan(kb: dict, track_id: str, knowledge: dict[str, int], hours_per_wee
     track = next((t for t in kb["tracks"] if t["id"] == track_id), None)
     if track is None:
         raise ValueError("Trilha inexistente.")
+    if not isinstance(target_level, str) or target_level not in kb["seniority_levels"]:
+        raise ValueError("Meta de senioridade inexistente.")
+    level = kb["seniority_levels"][target_level]
     rows, gaps = [], {}
     inconsistencies = []
-    targets = {req["skill"]: req["target"] for req in track["requirements"]}
+    targets = {req["skill"]: max(req["target"], level["target_floor"])
+               for req in track["requirements"]}
     reached = total = 0
     for req in track["requirements"]:
         skill = req["skill"]
         spec = kb["skills"][skill]
+        target = targets[skill]
         current = knowledge.get(skill, 0)
-        gap = max(0, req["target"] - current)
+        gap = max(0, target - current)
         row = {"skill": skill, "name": spec["name"], "current": current,
-               "target": req["target"], "gap": gap, "importance": req["importance"]}
+               "target": target, "gap": gap, "importance": req["importance"]}
         rows.append(row)
-        if current >= req["target"]:
+        if current >= target:
             for prerequisite in spec["prerequisites"]:
                 if knowledge.get(prerequisite, 0) < targets[prerequisite]:
                     inconsistencies.append({"skill": spec["name"],
                                             "prerequisite": kb["skills"][prerequisite]["name"]})
-        total += req["target"] * req["importance"]
-        reached += min(current, req["target"]) * req["importance"]
+        total += target * req["importance"]
+        reached += min(current, target) * req["importance"]
         if gap:
             gaps[skill] = {**row, "hours": gap * spec["hours_per_level"],
                            "study": spec["study"], "url": spec["url"],
@@ -230,9 +246,14 @@ def build_plan(kb: dict, track_id: str, knowledge: dict[str, int], hours_per_wee
     remaining = dict(gaps)
     roadmap = []
     elapsed = 0
+
+    def ancestors(skill: str) -> set[str]:
+        dependencies = set(kb["skills"][skill]["prerequisites"])
+        return dependencies.union(*(ancestors(p) for p in dependencies))
+
     while remaining:
         available = [g for skill, g in remaining.items()
-                     if not (set(kb["skills"][skill]["prerequisites"]) & remaining.keys())]
+                     if not (ancestors(skill) & remaining.keys())]
         if not available:
             raise ValueError("Não foi possível ordenar os pré-requisitos.")
         item = min(available, key=lambda g: (-g["priority"], g["skill"]))
@@ -243,12 +264,16 @@ def build_plan(kb: dict, track_id: str, knowledge: dict[str, int], hours_per_wee
         roadmap.append(item)
         del remaining[item["skill"]]
     portfolio = {**track["portfolio"],
+                 "level_guidance": level["portfolio_guidance"],
                  "focus": [g["name"] for g in roadmap],
                  "next_step": ("Aplicar no projeto as competências estudadas e registrar evidências de evolução."
                                if roadmap else "Ampliar o projeto, justificar decisões e pedir revisão de código ou produto.")}
     return {"track_id": track_id, "track_name": track["name"], "requirements": rows,
+            "target_level": target_level, "target_level_name": level["name"],
+            "target_description": level["description"],
             "gaps": list(gaps.values()), "readiness": 100 * reached / total,
-            "status": "Metas iniciais atendidas" if not gaps else "Competências em desenvolvimento",
+            "status": (("Metas iniciais atendidas" if target_level == "junior" else "Metas de estudo atendidas")
+                       if not gaps else "Competências em desenvolvimento"),
             "roadmap": roadmap, "total_hours": elapsed,
             "estimated_weeks": math.ceil(elapsed / hours_per_week),
             "hours_per_week": hours_per_week, "portfolio": portfolio,
@@ -275,8 +300,10 @@ def report_markdown(kb: dict, profile: dict, result: dict, plan: dict) -> str:
     selected = next(r for r in result["ranking"] if r["id"] == plan["track_id"])
     lines += ["", f"## Trilha escolhida: {plan['track_name']}", "",
               f"Pontuação base: {selected['base_score']:.1f}%; penalidades: {selected['penalty_points']:.1f} pontos.",
-              f"Cobertura das metas iniciais: {plan['readiness']:.1f}%. {plan['status']}.",
-              kb["metadata"]["junior_definition"], "", "### Explicação do cálculo", ""]
+              f"Meta de estudo: {plan['target_level_name']}. {plan['target_description']}",
+              f"Cobertura das metas: {plan['readiness']:.1f}%. {plan['status']}.",
+              "As referências são didáticas; a autoavaliação não comprova senioridade profissional.",
+              "", "### Explicação do cálculo", ""]
     for f in selected["factors"]:
         answer = f["answer"] if f["answer"] is not None else "Não sei (neutro)"
         lines.append(f"- {f['label']}: resposta {answer}, peso {f['weight']}, contribuição {f['points']:.2f} pontos.")
@@ -301,13 +328,14 @@ def report_markdown(kb: dict, profile: dict, result: dict, plan: dict) -> str:
                   f"   {step['study']} [Material oficial]({step['url']}).",
                   f"   **Evidência de aprendizagem:** {step['evidence']}"]
     if not plan["roadmap"]:
-        lines.append("Sem lacunas para as metas iniciais desta base. Avance para o projeto de portfólio.")
+        lines.append("Sem lacunas para a meta selecionada nesta base. Avance para o projeto de portfólio.")
     project = plan["portfolio"]
     lines += ["", f"### Portfólio: {project['title']}", "", project["summary"], ""]
     lines.extend(f"- {item}" for item in project["deliverables"])
     if project["focus"]:
         lines += ["", "Pratique especialmente: " + ", ".join(project["focus"]) + "."]
-    lines += ["", project["next_step"], "", "### Certificações opcionais", "", kb["metadata"]["certification_note"], ""]
+    lines += ["", project["next_step"], "", project["level_guidance"],
+              "", "### Certificações opcionais", "", kb["metadata"]["certification_note"], ""]
     for cert in plan["certifications"]:
         lines.append(f"- [{cert['name']}]({cert['url']}): {cert['when']}")
     lines += ["", "### Limitações", "", kb["metadata"]["method"],

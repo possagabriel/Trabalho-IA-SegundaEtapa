@@ -105,7 +105,7 @@ def profile_page(kb):
             hours = st.slider("Horas de estudo por semana", 1, 40, value=profile["hours"])
             st.caption("Escolha um ritmo que caiba na sua rotina. Você poderá ajustá-lo no resultado.")
             if st.form_submit_button("Continuar para afinidades", type="primary", width="stretch"):
-                st.session_state.profile = {"name": name.strip(), "experience": experience, "hours": hours}
+                st.session_state.profile = {**profile, "name": name.strip(), "experience": experience, "hours": hours}
                 move(1)
     with aside:
         with st.container(border=True):
@@ -145,7 +145,7 @@ def technical_page(kb):
         with skills:
             st.subheader("Reconheça o que você já aprendeu")
             st.write("Abra cada grupo e ajuste os temas que você conhece. Os demais começam em 0: nunca estudei.")
-            st.info("0 · Nunca estudei  |  1 · Conheço a teoria  |  2 · Faço com orientação  |  3 · Tenho autonomia  |  4 · Aprofundo e oriento")
+            st.info("  |  ".join(f"{level} · {label}" for level, label in kb["knowledge_levels"].items()))
             knowledge = {}
             categories = dict.fromkeys(spec.get("category", "Outras competências") for spec in kb["skills"].values())
             for category in categories:
@@ -212,10 +212,12 @@ def recommendation_cards(result):
 
 def plan_panel(kb, plan):
     columns = st.columns(3)
-    columns[0].metric("Competências iniciais", f"{plan['readiness']:.0f}%")
+    columns[0].metric("Competências iniciais" if plan["target_level"] == "junior" else "Competências para a meta",
+                      f"{plan['readiness']:.0f}%")
     columns[1].metric("Lacunas a trabalhar", str(len(plan["gaps"])))
     columns[2].metric("Estudo estimado", f"{plan['estimated_weeks']} semanas", help=f"{plan['total_hours']} horas, a {plan['hours_per_week']} h/semana. Projeto e exames são adicionais.")
-    st.caption(kb["metadata"]["junior_definition"])
+    st.write(f"**Meta de estudo: {plan['target_level_name']}.** {plan['target_description']}")
+    st.caption("As referências são didáticas. Cumprir as metas declaradas não comprova senioridade profissional.")
     if plan["inconsistencies"]:
         with st.expander("Vale revisar alguns pré-requisitos da sua autoavaliação", expanded=True):
             for item in plan["inconsistencies"]:
@@ -225,7 +227,7 @@ def plan_panel(kb, plan):
         st.markdown(f'<div class="next-action"><small>Seu primeiro passo</small><h3>{escape(first["name"])}</h3><p>{escape(first["study"])}</p><p><b>Entrega prática:</b> {escape(first["evidence"])}</p></div>', unsafe_allow_html=True)
         st.markdown(f"[Abrir material para começar →]({first['url']})")
     else:
-        st.success("As metas iniciais estão cobertas. Seu próximo passo é demonstrar essas competências no projeto de portfólio.")
+        st.success("As metas selecionadas estão cobertas. Seu próximo passo é demonstrar essas competências no projeto de portfólio.")
     roadmap, skills, portfolio = st.tabs(["Roteiro de estudos", "Minhas lacunas", "Projeto e certificações"])
     with roadmap:
         st.caption("Os fundamentos vêm antes das tecnologias que dependem deles. Estimativas incluem só as lacunas de estudo, sem portfólio ou exames.")
@@ -237,9 +239,9 @@ def plan_panel(kb, plan):
                 st.write("**Como demonstrar que aprendeu:** " + item["evidence"])
                 st.markdown(f"[Estudar na fonte oficial]({item['url']})")
         if not plan["roadmap"]:
-            st.write("Nenhuma etapa de estudo pendente para a referência inicial. Consulte a aba de projeto.")
+            st.write("Nenhuma etapa de estudo pendente para a referência selecionada. Consulte a aba de projeto.")
     with skills:
-        st.write("Compare o que você declarou com a meta inicial desta trilha.")
+        st.write(f"Compare o que você declarou com a meta {plan['target_level_name']} desta trilha.")
         rows = [{"Competência": r["name"], "Atual": r["current"], "Meta": r["target"],
                  "Falta evoluir": r["gap"], "Situação": "Praticar" if r["gap"] else "Meta atendida"}
                 for r in sorted(plan["requirements"], key=lambda r: -r["gap"])]
@@ -255,6 +257,7 @@ def plan_panel(kb, plan):
         if project["focus"]:
             st.info("Use o projeto para praticar: " + ", ".join(project["focus"]) + ".")
         st.caption("No GitHub, inclua README, instruções de execução e evidências das entregas. " + project["next_step"])
+        st.write(f"**Evolução do portfólio para {plan['target_level_name']}:** {project['level_guidance']}")
         st.subheader("Certificações para considerar depois")
         st.caption(kb["metadata"]["certification_note"])
         for cert in plan["certifications"]:
@@ -263,7 +266,7 @@ def plan_panel(kb, plan):
                 st.write(cert["when"])
 
 
-def comparison_panel(kb, result, chosen, hours):
+def comparison_panel(kb, result, chosen, hours, target_level):
     st.subheader("Compare possibilidades, além do primeiro lugar")
     st.caption("A barra mostra a aderência atual. O traço indica a faixa conservadora das respostas ainda desconhecidas; não é um intervalo estatístico.")
     st.altair_chart(compatibility_chart(result["ranking"], chosen), width="stretch")
@@ -275,10 +278,10 @@ def comparison_panel(kb, result, chosen, hours):
         rows = []
         for track_id in ids:
             row = next(r for r in result["ranking"] if r["id"] == track_id)
-            plan = build_plan(kb, track_id, st.session_state.knowledge, hours)
+            plan = build_plan(kb, track_id, st.session_state.knowledge, hours, target_level)
             rows.append({**row, **plan})
         st.altair_chart(comparison_chart(rows), width="stretch")
-        st.caption("Afinidade mede interesse. Competências iniciais medem o conhecimento declarado. Uma carreira pode atrair você e ainda exigir bastante estudo.")
+        st.caption("Afinidade mede interesse. Competências medem o conhecimento declarado em relação à meta selecionada. Uma carreira pode atrair você e ainda exigir bastante estudo.")
         st.dataframe(pd.DataFrame([{"Trilha": r["name"], "Afinidade (%)": round(r["score"], 1),
                                      "Competências (%)": round(r["readiness"], 1), "Lacunas": len(r["gaps"]),
                                      "Horas de estudo": r["total_hours"], "Semanas": r["estimated_weeks"]} for r in rows]),
@@ -330,16 +333,21 @@ def results_page(kb):
     with right:
         hours = st.slider("Ajustar horas de estudo por semana", 1, 40, value=st.session_state.profile["hours"], key="plan_hours")
         st.session_state.profile["hours"] = hours
+    levels = kb["seniority_levels"]
+    target_level = st.selectbox("Meta de senioridade para os estudos", list(levels),
+        index=list(levels).index(st.session_state.profile.get("target_level", "junior")),
+        format_func=lambda key: levels[key]["name"], key="target_level")
+    st.session_state.profile["target_level"] = target_level
     track = next(t for t in kb["tracks"] if t["id"] == chosen)
     selected = next(r for r in result["ranking"] if r["id"] == chosen)
-    plan = build_plan(kb, chosen, st.session_state.knowledge, hours)
+    plan = build_plan(kb, chosen, st.session_state.knowledge, hours, target_level)
     st.subheader(track["name"])
     st.write(track["description"])
     plan_tab, comparison_tab, explanation_tab = st.tabs(["Meu plano de ação", "Comparar trilhas", "Por que este resultado?"])
     with plan_tab:
         plan_panel(kb, plan)
     with comparison_tab:
-        comparison_panel(kb, result, chosen, hours)
+        comparison_panel(kb, result, chosen, hours, target_level)
     with explanation_tab:
         explanation_panel(kb, selected)
     st.divider()

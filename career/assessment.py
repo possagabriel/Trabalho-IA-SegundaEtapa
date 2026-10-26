@@ -9,7 +9,7 @@ MAX_IMPORT_BYTES = 1_000_000
 
 
 def empty_assessment():
-    return {"profile": {"name": "", "hours": 6, "experience": EXPERIENCES[0]},
+    return {"profile": {"name": "", "hours": 6, "experience": EXPERIENCES[0], "target_level": "junior"},
             "answers": {}, "knowledge": {}}
 
 
@@ -46,9 +46,11 @@ def import_assessment(raw: bytes, kb: dict) -> dict:
     if experience not in EXPERIENCES:
         raise ValueError("Momento profissional inválido.")
     hours = profile.get("hours", 6)
+    target_level = profile.get("target_level", "junior")
     # Reutiliza as regras do motor, incluindo faixas e rejeição de booleanos.
     rank_careers(kb, data["answers"])
-    build_plan(kb, kb["tracks"][0]["id"], data["knowledge"], hours)
-    return {"profile": {"name": name.strip(), "experience": experience, "hours": hours},
+    build_plan(kb, kb["tracks"][0]["id"], data["knowledge"], hours, target_level)
+    return {"profile": {"name": name.strip(), "experience": experience, "hours": hours,
+                        "target_level": target_level},
             "answers": data["answers"], "knowledge": data["knowledge"],
             "version_changed": data.get("knowledge_base_version") != kb["metadata"]["version"]}

@@ -32,6 +32,22 @@ def test_legacy_export_and_version_change(kb):
     restored = import_assessment(json.dumps(data).encode(), kb)
     assert restored["version_changed"]
     assert restored["profile"]["experience"] == "Estou começando"
+    assert restored["profile"]["target_level"] == "junior"
+
+
+def test_seniority_survives_round_trip(kb):
+    data = empty_assessment()
+    data["profile"]["target_level"] = "senior"
+    restored = import_assessment(export_assessment(kb, **data).encode(), kb)
+    assert restored["profile"]["target_level"] == "senior"
+
+
+@pytest.mark.parametrize("target", ["unknown", None, [], True])
+def test_import_rejects_invalid_seniority(kb, target):
+    data = empty_assessment()
+    data["profile"]["target_level"] = target
+    with pytest.raises(ValueError, match="senioridade"):
+        import_assessment(json.dumps(data).encode(), kb)
 
 
 @pytest.mark.parametrize("raw", [b"broken", b"[]", b"null", b"\xff", b"{}", b"x" * 1_000_001,
