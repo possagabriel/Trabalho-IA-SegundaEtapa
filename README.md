@@ -12,6 +12,7 @@ O sistema cruza afinidades e objetivos com regras ponderadas, compara dez trilha
 - Ranking explicável com faixa de variação para respostas desconhecidas.
 - Comparação de até três carreiras por afinidade, competências, lacunas e esforço de estudo.
 - Plano com primeiro passo destacado, pré-requisitos, entregas práticas e ritmo semanal ajustável.
+- Metas de estudo Júnior, Pleno e Sênior, com recálculo das lacunas e orientação de portfólio por nível.
 - Salvamento e retomada de avaliações JSON, além de relatório Markdown.
 - Três perfis demonstrativos para explorar o resultado sem preencher tudo.
 
@@ -74,6 +75,7 @@ As respostas permanecem na sessão do Streamlit; não há banco de dados nem env
 | Ranking e Top 3 | Compatibilidade individual de 0% a 100% para todas as trilhas |
 | Explicabilidade | Contribuições por pergunta, pesos e motivos das penalidades |
 | Metas Júnior e lacunas | Níveis de competência de 0 a 4 comparados às metas por trilha |
+| Níveis de senioridade | Júnior como padrão; metas didáticas Pleno e Sênior selecionáveis, definidas no JSON |
 | Roadmap individual | Apenas competências faltantes, respeitando pré-requisitos e disponibilidade semanal |
 | Certificações e portfólio | Sugestões por trilha, links oficiais e foco de prática nas lacunas |
 | Interface Streamlit | Wizard com três etapas de coleta e página de resultados |
@@ -151,9 +153,11 @@ Para respostas pendentes, o motor também calcula limites conservadores: no infe
 | 3 | Realizo projetos com autonomia |
 | 4 | Aprofundo, otimizo e oriento |
 
-A meta Júnior desta base é o nível 2 nas competências exigidas. Trata-se de uma referência educacional, não de uma classificação profissional validada. O sistema mostra “Metas iniciais atendidas” quando não há lacunas; não atribui cargos de Pleno ou Sênior apenas pela autoavaliação.
+A meta Júnior desta base é o nível 2 nas competências exigidas. Na tela de resultados, **Meta de senioridade para os estudos** permite escolher também Pleno (mínimo 3) ou Sênior (mínimo 4). O motor aplica `max(meta da competência, piso do nível)` e recalcula lacunas, cobertura, cronograma e orientação do portfólio. Ranking de afinidades permanece independente dessa escolha. A meta é preservada na revisão e nas exportações; avaliações antigas assumem Júnior.
 
-Se o usuário declara domínio de uma tecnologia sem os fundamentos exigidos, o plano sinaliza essa inconsistência para revisão, mantendo os valores informados. As entregas práticas ajudam a conferir a autoavaliação com evidências.
+As três referências são educacionais e usam o mesmo catálogo de competências: orientação, autonomia e aprofundamento. Não constituem uma avaliação completa dos requisitos profissionais de cada cargo. O sistema indica metas de estudo atendidas; não atribui senioridade profissional pela autoavaliação. As regras e os textos estão em `seniority_levels` no JSON (base 1.2.0, esquema 2).
+
+Se o usuário declara domínio de uma tecnologia sem os fundamentos exigidos, o plano sinaliza essa inconsistência para revisão, mantendo os valores informados. O roteiro respeita também pré-requisitos indiretos: HTML/CSS pendente vem antes de React mesmo quando JavaScript já foi declarado dominado. As entregas práticas ajudam a conferir a autoavaliação com evidências.
 
 ## Alterar a base de conhecimento
 

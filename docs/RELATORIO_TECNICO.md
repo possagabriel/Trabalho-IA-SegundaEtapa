@@ -9,7 +9,7 @@
 
 Construir um sistema especialista baseado em regras com tratamento de incerteza e pontuação ponderada. O sistema avalia dez trilhas de TI e produz uma orientação explicável, acompanhada de lacunas de competência e ações concretas de desenvolvimento.
 
-As trilhas são Back-end, Front-end/UX, Cientista de Dados, Engenheiro de Dados, Cibersegurança, DevOps/SRE, Cloud Architecture, Mobile, QA e Product Management. O alvo de competência é uma referência inicial Júnior. Não se infere senioridade profissional a partir de afinidade.
+As trilhas são Back-end, Front-end/UX, Cientista de Dados, Engenheiro de Dados, Cibersegurança, DevOps/SRE, Cloud Architecture, Mobile, QA e Product Management. O alvo padrão é a referência Júnior; também há metas de estudo Pleno e Sênior. Não se infere senioridade profissional a partir de afinidade.
 
 ## 2. Arquitetura
 
@@ -39,7 +39,7 @@ Foram definidas 20 perguntas: 14 afinidades técnicas e seis preferências de at
 
 O catálogo tem 33 competências, compartilhadas entre trilhas, evitando perguntar repetidamente o nível do usuário em Git, SQL ou programação. Cada competência tem descrição, pré-requisitos, estimativa de horas por nível e fonte de estudo. Cada trilha reúne pesos, penalidades, metas, certificações e projeto.
 
-Na base 1.1.0, as competências também recebem uma categoria de apresentação e uma entrega prática (`evidence`), usada como evidência de aprendizagem no roteiro e no relatório. Os campos são opcionais para manter compatibilidade com bases anteriores. Perfis fictícios de demonstração ficam em `data/perfis_exemplo.json`.
+Desde a base 1.1.0, as competências também recebem uma categoria de apresentação e uma entrega prática (`evidence`), usada como evidência de aprendizagem no roteiro e no relatório. Esses campos permanecem opcionais. A base atual exige esquema 2 e a configuração `seniority_levels`; arquivos de avaliação exportados anteriormente continuam compatíveis. Perfis fictícios de demonstração ficam em `data/perfis_exemplo.json`.
 
 Os pesos de 1 a 5 representam relevância relativa dentro da trilha: 5 para atividades centrais; 3–4 para competências de forte apoio; 1–2 para aspectos complementares. Perguntas ausentes do mapa de pesos contribuem zero. A [matriz de pesos](MATRIZ_PESOS.md) permite revisar a modelagem.
 
@@ -55,6 +55,7 @@ Esta é uma base heurística construída para o exercício, sem entrevistas com 
 | `metadata` | Identificação, versão, data e limitações do modelo |
 | `scoring` | Escala, neutralidade, cobertura mínima e limiares |
 | `knowledge_levels` | Interpretação dos níveis de competência |
+| `seniority_levels` | Nome, piso de competência, descrição e orientação de portfólio por meta de senioridade |
 | `questions` | Identificador, rótulo, pergunta e grupo |
 | `skills` | Competências, pré-requisitos, esforço e materiais |
 | `tracks[].weights` | Relação entre perguntas e pesos |
@@ -100,15 +101,17 @@ Esses limites contêm as pontuações possíveis, mas não precisam ser atingív
 
 O nível atual vai de 0 a 4. Para a referência Júnior, a base inicial exige nível 2: realizar tarefas básicas com orientação. A lacuna de uma competência é `max(0, meta − nível atual)`.
 
+Na base 1.2.0 (esquema 2), a meta efetiva é `max(meta da competência na trilha, piso da senioridade selecionada)`. Os pisos externos são 1 para Júnior (preserva as metas individuais, atualmente 2), 3 para Pleno e 4 para Sênior. Esses níveis representam estudo com orientação, autonomia e aprofundamento no mesmo catálogo; não modelam todos os requisitos profissionais desses cargos. A escolha altera o plano e a orientação do portfólio, mas não altera a afinidade. A interface, a comparação e os relatórios usam a mesma meta. Avaliações antigas sem esse campo continuam válidas e usam Júnior.
+
 A cobertura de competências é:
 
 ```text
 100 × Σ(min(nível atual, meta) × importância) / Σ(meta × importância)
 ```
 
-Conhecimento excedente em uma habilidade não compensa a falta de outra. A ausência de lacunas produz “Metas iniciais atendidas”, sem atribuir senioridade superior.
+Conhecimento excedente em uma habilidade não compensa a falta de outra. A ausência de lacunas produz “Metas iniciais atendidas” para Júnior ou “Metas de estudo atendidas” para as demais referências, sem atribuir senioridade profissional.
 
-O roteiro usa uma ordenação topológica: primeiro seleciona lacunas cujos pré-requisitos não estão pendentes; entre essas, escolhe a maior prioridade, calculada por `lacuna × importância`. Empates usam o identificador da competência. Competências já dominadas não geram etapas de estudo.
+O roteiro usa uma ordenação topológica: primeiro seleciona lacunas cujos pré-requisitos diretos ou indiretos não estão pendentes; entre essas, escolhe a maior prioridade, calculada por `lacuna × importância`. Empates usam o identificador da competência. Competências já dominadas não geram etapas de estudo. Uma competência intermediária já dominada não elimina a necessidade de estudar os fundamentos pendentes antes de suas dependentes.
 
 Cada etapa demanda `lacuna × horas por nível`. O calendário divide o esforço acumulado pela disponibilidade semanal e permite que duas etapas compartilhem a mesma semana. A soma corresponde apenas aos estudos faltantes; projeto e exames têm esforço adicional não estimado.
 
