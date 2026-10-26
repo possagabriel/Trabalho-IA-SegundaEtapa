@@ -26,12 +26,12 @@ def compatibility_chart(ranking, chosen):
 def comparison_chart(rows):
     frame = pd.DataFrame([{"Trilha": r["name"], "Medida": measure, "Percentual": value}
                           for r in rows for measure, value in
-                          [("Afinidade", r["score"]), ("Competências iniciais", r["readiness"])]])
+                          [("Afinidade", r["score"]), ("Competências para a meta", r["readiness"])]])
     return alt.Chart(frame).mark_bar(cornerRadiusEnd=4).encode(
         x=alt.X("Percentual:Q", scale=alt.Scale(domain=[0, 100]), title="Percentual (%)"),
         y=alt.Y("Trilha:N", title=None, sort=[r["name"] for r in rows]),
         yOffset="Medida:N",
-        color=alt.Color("Medida:N", scale=alt.Scale(domain=["Afinidade", "Competências iniciais"],
+        color=alt.Color("Medida:N", scale=alt.Scale(domain=["Afinidade", "Competências para a meta"],
                                                    range=["#176c58", "#8573b9"]), legend=alt.Legend(title=None, orient="bottom")),
         tooltip=["Trilha:N", "Medida:N", alt.Tooltip("Percentual:Q", format=".1f")]
     ).properties(height=max(130, len(rows) * 76)).configure_view(strokeWidth=0)

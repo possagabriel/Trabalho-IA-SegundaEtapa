@@ -54,6 +54,9 @@ def main():
         expect(page.get_by_text("Compare possibilidades, além do primeiro lugar", exact=True)).to_be_visible()
         expect(page.locator("canvas").first).to_be_visible()
         desktop_capture(page, screenshots / "comparacao-desktop.png")
+        page.get_by_test_id("stSelectbox").filter(has_text="Meta de senioridade para os estudos").get_by_role("combobox").click()
+        page.get_by_role("option", name="Sênior", exact=True).click()
+        expect(page.get_by_text("Meta de estudo: Sênior.", exact=False)).to_be_attached()
         with page.expect_download() as downloaded:
             page.get_by_role("button", name="Baixar avaliação (.json)", exact=True).click()
         export_path = Path(temporary) / "avaliacao.json"
@@ -61,11 +64,14 @@ def main():
         data = json.loads(export_path.read_text())
         assert len(data["result"]["ranking"]) == 10
         assert data["plan"]["roadmap"][0]["evidence"]
+        assert data["profile"]["target_level"] == data["plan"]["target_level"] == "senior"
+        assert all(row["target"] == 4 for row in data["plan"]["requirements"])
         with page.expect_download() as downloaded:
             page.get_by_role("button", name="Baixar relatório (.md)", exact=True).click()
         report_path = Path(temporary) / "relatorio.md"
         downloaded.value.save_as(report_path)
         assert "Evidência de aprendizagem" in report_path.read_text()
+        assert "Meta de estudo: Sênior" in report_path.read_text()
         page.get_by_role("button", name="Nova avaliação", exact=True).click()
         expect(page.get_by_text("Vamos começar por você", exact=True)).to_be_visible()
         page.get_by_text("Salvar ou retomar avaliação", exact=True).click()
@@ -78,6 +84,7 @@ def main():
         page.get_by_role("button", name="Continuar para objetivos", exact=True).click()
         page.get_by_role("button", name="Gerar meu plano", exact=True).click()
         expect(page.get_by_role("heading", name="Seu próximo passo começa aqui")).to_be_visible()
+        expect(page.get_by_text("Meta de estudo: Sênior.", exact=False)).to_be_visible()
         check_no_overflow(page)
         mobile = browser.new_page(viewport={"width": 390, "height": 844}, is_mobile=True, has_touch=True)
         mobile.on("pageerror", lambda error: errors.append(str(error)))
@@ -100,7 +107,7 @@ def main():
         mobile.screenshot(path=str(screenshots / "plano-mobile.png"), full_page=True)
         browser.close()
     assert not errors, errors
-    print("Navegador: desktop, celular, comparação, downloads e restauração verificados.")
+    print("Navegador: desktop, celular, comparação, senioridade, downloads e restauração verificados.")
 
 
 if __name__ == "__main__":

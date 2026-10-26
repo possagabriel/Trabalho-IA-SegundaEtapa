@@ -227,3 +227,56 @@ def test_advanced_skill_without_prerequisite_is_flagged(kb):
     assert {item["prerequisite"] for item in plan["inconsistencies"]} == {"Fundamentos de programação", "HTTP e APIs"}
     assert "api" not in [item["skill"] for item in plan["roadmap"]]
     assert all(item["evidence"] for item in plan["roadmap"])
+
+
+@pytest.mark.parametrize("track_id", ["backend", "frontend", "cientista_dados", "engenheiro_dados",
+                                     "ciberseguranca", "devops", "cloud", "mobile", "qa", "produto"])
+def test_seniority_targets_change_gaps_without_changing_affinity(kb, track_id):
+    knowledge = {skill: 2 for skill in kb["skills"]}
+    junior = build_plan(kb, track_id, knowledge)
+    pleno = build_plan(kb, track_id, knowledge, target_level="pleno")
+    senior = build_plan(kb, track_id, knowledge, target_level="senior")
+    assert junior["readiness"] == 100
+    assert junior["total_hours"] == 0
+    assert pleno["readiness"] == pytest.approx(200 / 3)
+    assert senior["readiness"] == pytest.approx(50)
+    assert 0 < pleno["total_hours"] < senior["total_hours"]
+    assert all(row["target"] == 4 for row in senior["requirements"])
+    assert pleno["portfolio"]["level_guidance"] != junior["portfolio"]["level_guidance"]
+    assert senior["target_level_name"] == "Sênior"
+
+
+def test_seniority_rules_are_external_and_reported(kb):
+    kb["seniority_levels"]["pleno"]["target_floor"] = 4
+    validate_knowledge(kb)
+    plan = build_plan(kb, "backend", {"git": 3}, target_level="pleno")
+    assert next(row for row in plan["requirements"] if row["skill"] == "git")["gap"] == 1
+    report = report_markdown(kb, {}, rank_careers(kb, {}), plan)
+    assert "Meta de estudo: Pleno" in report
+    assert plan["portfolio"]["level_guidance"] in report
+
+
+@pytest.mark.parametrize("target", [None, [], "unknown", 3, True])
+def test_invalid_seniority_target(kb, target):
+    with pytest.raises(ValueError, match="senioridade"):
+        build_plan(kb, "backend", {}, target_level=target)
+
+
+@pytest.mark.parametrize("floor", [0, 5, 2.5, True, None])
+def test_invalid_seniority_knowledge_base(kb, floor):
+    kb["seniority_levels"]["pleno"]["target_floor"] = floor
+    with pytest.raises(ValueError):
+        validate_knowledge(kb)
+
+
+def test_roadmap_respects_transitive_prerequisite_even_if_middle_skill_is_known(kb):
+    # React depends on JavaScript, which depends on HTML/CSS. Declaring
+    # JavaScript mastered must not let React precede missing HTML/CSS.
+    track = next(track for track in kb["tracks"] if track["id"] == "frontend")
+    next(req for req in track["requirements"] if req["skill"] == "react")["importance"] = 10
+    next(req for req in track["requirements"] if req["skill"] == "html_css")["importance"] = 1
+    validate_knowledge(kb)
+    plan = build_plan(kb, "frontend", {"javascript": 2})
+    order = [step["skill"] for step in plan["roadmap"]]
+    assert "javascript" not in order
+    assert order.index("html_css") < order.index("react")
